@@ -11,10 +11,10 @@ const tierMeta: Record<
   { label: string; name: string; color: string }
 > = {
   1: { label: "FÁZE 1", name: "Auto zdarma", color: "var(--green)" },
-  2: { label: "FÁZE 2", name: "Zvýhodněné pořízení", color: "var(--accent)" },
-  3: { label: "FÁZE 3", name: "Dotace a granty", color: "var(--blue)" },
-  4: { label: "FÁZE 4", name: "Vlastní příjmy", color: "var(--purple)" },
-  5: { label: "FÁZE 5", name: "Kombinované financování", color: "var(--gold)" },
+  2: { label: "FÁZE 2", name: "Dotace a granty", color: "var(--blue)" },
+  3: { label: "FÁZE 3", name: "Zvýhodněné pořízení", color: "var(--accent)" },
+  4: { label: "FÁZE 4", name: "Kombinované financování", color: "var(--gold)" },
+  5: { label: "FÁZE 5", name: "Vlastní příjmy", color: "var(--purple)" },
   6: { label: "FÁZE 6", name: "Poslední záchrana", color: "var(--muted)" },
 };
 
