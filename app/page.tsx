@@ -18,9 +18,9 @@ function SpiderPage() {
           Jak získat auto pro oddíl
         </h1>
         <p className="mt-2 text-sm text-[var(--muted)] max-w-2xl leading-relaxed">
-          Procházejte strategiemi zleva doprava — od nejlepších po záložní.
-          Klikněte na kartu, zvolte ANO / NE / PODMÍNKA. Cesty co nevyjdou
-          zešednou, živé zůstanou.
+          Začněte nejlepší variantou vlevo. Když řeknou NE, otevře se další
+          kolo alternativ. Klikněte na kartu, zvolte ANO / NE / PODMÍNKA.
+          Vyřazené cesty zešednou, živé zůstanou.
         </p>
       </div>
 

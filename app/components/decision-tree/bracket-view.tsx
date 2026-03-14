@@ -2,21 +2,71 @@
 
 import { useState } from "react";
 
-import type { DecisionNode, NodeOutcome } from "../../data";
+import type { DecisionNode } from "../../data";
 import { decisionNodes } from "../../data";
 import { useTreeState } from "../tree-state-provider";
 
-const tierMeta: Record<
-  number,
-  { label: string; name: string; color: string }
-> = {
-  1: { label: "FÁZE 1", name: "Auto zdarma", color: "var(--green)" },
-  2: { label: "FÁZE 2", name: "Dotace a granty", color: "var(--blue)" },
-  3: { label: "FÁZE 3", name: "Zvýhodněné pořízení", color: "var(--accent)" },
-  4: { label: "FÁZE 4", name: "Kombinované financování", color: "var(--gold)" },
-  5: { label: "FÁZE 5", name: "Vlastní příjmy", color: "var(--purple)" },
-  6: { label: "FÁZE 6", name: "Poslední záchrana", color: "var(--muted)" },
+// ── Pavouk: 7 kol (ZAČÁTEK + FÁZE 1–6) ──
+
+type SpiderLevel = {
+  label: string;
+  name: string;
+  color: string;
+  nodeIds: string[];
 };
+
+const SPIDER_LEVELS: SpiderLevel[] = [
+  {
+    label: "ZAČÁTEK",
+    name: "Nejlepší varianta",
+    color: "var(--green)",
+    nodeIds: ["skoda-free"],
+  },
+  {
+    label: "FÁZE 1",
+    name: "Alternativy zdarma",
+    color: "var(--green)",
+    nodeIds: ["competitor-free", "skoda-foundation"],
+  },
+  {
+    label: "FÁZE 2",
+    name: "Dotace a granty",
+    color: "var(--blue)",
+    nodeIds: [
+      "grant-city",
+      "grant-region",
+      "grant-nsa",
+      "grant-eu",
+      "grant-foundations",
+    ],
+  },
+  {
+    label: "FÁZE 3",
+    name: "Zvýhodněné pořízení",
+    color: "var(--accent)",
+    nodeIds: ["automaker-program", "fleet-lease", "demo-car"],
+  },
+  {
+    label: "FÁZE 4",
+    name: "Kombinované financování",
+    color: "var(--gold)",
+    nodeIds: ["subsidized-lease", "new-nonprofit"],
+  },
+  {
+    label: "FÁZE 5",
+    name: "Vlastní příjmy",
+    color: "var(--purple)",
+    nodeIds: ["partner-club", "parent-donations", "crowdfunding"],
+  },
+  {
+    label: "FÁZE 6",
+    name: "Poslední záchrana",
+    color: "var(--muted)",
+    nodeIds: ["used-car", "own-loan"],
+  },
+];
+
+const nodesById = new Map(decisionNodes.map((n) => [n.id, n]));
 
 const diffLabel = { low: "Snadné", medium: "Střední", high: "Náročné" };
 const probLabel = { low: "Nízká", medium: "Střední", high: "Vysoká" };
@@ -25,98 +75,73 @@ export function BracketView() {
   const { state, setOutcome, setNote, resetNode } = useTreeState();
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const tiers = [1, 2, 3, 4, 5, 6];
-  const byTier = (tier: number) =>
-    decisionNodes
-      .filter((n) => n.tier === tier)
-      .sort((a, b) => a.order - b.order);
-
-  function isTierActive(tier: number) {
-    if (tier === 1 || tier === 6) return true;
-    for (let t = 1; t < tier; t++) {
-      if (byTier(t).some((n) => state.outcomes[n.id] === "ne")) return true;
-    }
-    return false;
+  // ── Kolo N je aktivní, když kolo N-1 má alespoň jedno NE ──
+  function isLevelActive(index: number): boolean {
+    if (index === 0) return true;
+    const prevLevel = SPIDER_LEVELS[index - 1];
+    return prevLevel.nodeIds.some((id) => state.outcomes[id] === "ne");
   }
 
-  function isConnectorLit(toTier: number) {
-    if (toTier === 6) return true;
-    for (let t = 1; t < toTier; t++) {
-      if (byTier(t).some((n) => state.outcomes[n.id] === "ne")) return true;
-    }
-    return false;
+  function isConnectorLit(toIndex: number): boolean {
+    return isLevelActive(toIndex);
   }
 
-  // Has any node in this tier been answered YES? (show success indicator)
-  function tierHasAno(tier: number) {
-    return byTier(tier).some((n) => state.outcomes[n.id] === "ano");
+  function levelHasAno(level: SpiderLevel): boolean {
+    return level.nodeIds.some((id) => state.outcomes[id] === "ano");
   }
 
-  const selectedNode = selectedId
-    ? decisionNodes.find((n) => n.id === selectedId) ?? null
-    : null;
+  const selectedNode = selectedId ? nodesById.get(selectedId) ?? null : null;
 
   return (
     <div className="space-y-6">
-      {/* ── BRACKET ── */}
+      {/* ── PAVOUK ── */}
       <div className="bracket">
-        {tiers.map((tier, i) => (
-          <div key={tier} className="bracket-stage">
-            {/* Connector arrow from previous tier */}
+        {SPIDER_LEVELS.map((level, i) => (
+          <div key={level.label} className="bracket-stage">
+            {/* Spojka z předchozího kola */}
             {i > 0 && (
               <div
-                className={`bracket-connector ${isConnectorLit(tier) ? "lit" : ""}`}
+                className={`bracket-connector ${isConnectorLit(i) ? "lit" : ""}`}
               >
-                <div className="bracket-connector-track" />
-                <svg
-                  className="bracket-connector-chevron"
-                  viewBox="0 0 10 18"
-                  fill="none"
-                >
-                  <path
-                    d="M1.5 1.5L8.5 9L1.5 16.5"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <div className="bracket-arm bracket-arm-merge" />
+                <div className="bracket-arm-bridge">
+                  <span className="bracket-arm-label">NE</span>
+                </div>
+                <div className="bracket-arm bracket-arm-split" />
               </div>
             )}
 
-            {/* Column */}
+            {/* Sloupec */}
             <div
-              className={`bracket-column ${isTierActive(tier) ? "active" : "inactive"}`}
+              className={`bracket-column ${isLevelActive(i) ? "active" : "inactive"}`}
             >
-              {/* Column header */}
+              {/* Hlavička */}
               <div
                 className="bracket-col-head"
                 style={
-                  { "--tier-color": tierMeta[tier].color } as React.CSSProperties
+                  { "--tier-color": level.color } as React.CSSProperties
                 }
               >
-                <span className="bracket-col-tier">
-                  {tierMeta[tier].label}
-                </span>
-                <span className="bracket-col-title">
-                  {tierMeta[tier].name}
-                </span>
-                {tierHasAno(tier) && (
+                <span className="bracket-col-tier">{level.label}</span>
+                <span className="bracket-col-title">{level.name}</span>
+                {levelHasAno(level) && (
                   <span className="bracket-col-win">POTVRZENO</span>
                 )}
               </div>
 
-              {/* Node cards */}
+              {/* Karty */}
               <div className="bracket-cards">
-                {byTier(tier).map((node) => {
-                  const outcome = state.outcomes[node.id] ?? "pending";
-                  const selected = selectedId === node.id;
+                {level.nodeIds.map((id) => {
+                  const node = nodesById.get(id);
+                  if (!node) return null;
+                  const outcome = state.outcomes[id] ?? "pending";
+                  const selected = selectedId === id;
                   return (
                     <button
-                      key={node.id}
+                      key={id}
                       type="button"
                       onClick={() =>
-                        setSelectedId(selected ? null : node.id)
+                        setSelectedId(selected ? null : id)
                       }
                       className={`bracket-card ${outcome} ${selected ? "selected" : ""}`}
                     >
@@ -143,7 +168,7 @@ export function BracketView() {
         ))}
       </div>
 
-      {/* ── DETAIL PANEL ── */}
+      {/* ── DETAIL ── */}
       {selectedNode && (
         <div className="bracket-detail">
           <div className="flex items-start justify-between gap-4">
@@ -166,7 +191,7 @@ export function BracketView() {
             {selectedNode.description}
           </p>
 
-          {/* Meta chips */}
+          {/* Meta */}
           <div className="flex flex-wrap gap-2 mt-3 text-xs">
             <span className="rounded-md bg-[var(--background)] px-2.5 py-1 font-medium">
               {selectedNode.estimatedTimeframe}
@@ -182,7 +207,7 @@ export function BracketView() {
             </span>
           </div>
 
-          {/* Steps + Risks */}
+          {/* Kroky + Rizika */}
           <div className="grid gap-5 md:grid-cols-2 mt-5">
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] mb-2">
@@ -213,7 +238,7 @@ export function BracketView() {
             </div>
           </div>
 
-          {/* Next move if outcome set */}
+          {/* Další postup */}
           {(state.outcomes[selectedNode.id] ?? "pending") !== "pending" && (
             <div
               className={`rounded-lg p-4 mt-4 ${
@@ -238,13 +263,13 @@ export function BracketView() {
             </div>
           )}
 
-          {/* Note textarea */}
+          {/* Poznámka */}
           <NoteField
             value={state.notes[selectedNode.id] ?? ""}
             onChange={(v) => setNote(selectedNode.id, v)}
           />
 
-          {/* Action buttons */}
+          {/* Akce */}
           <div className="flex flex-wrap gap-2 mt-4">
             <ActionBtn
               label="ANO"

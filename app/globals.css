@@ -56,7 +56,7 @@ a {
   border-radius: 4px;
 }
 
-/* ── Bracket ── */
+/* ── Bracket / Pavouk ── */
 
 .bracket {
   display: flex;
@@ -78,14 +78,15 @@ a {
 .bracket-column {
   display: flex;
   flex-direction: column;
-  min-width: 195px;
-  max-width: 220px;
+  min-width: 175px;
+  max-width: 200px;
   transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
 .bracket-column.inactive {
-  opacity: 0.3;
-  filter: grayscale(0.5);
+  opacity: 0.25;
+  filter: grayscale(0.6);
+  pointer-events: none;
 }
 
 .bracket-column.active {
@@ -238,41 +239,82 @@ a {
   color: var(--muted);
 }
 
-/* Connector between columns */
+/* ── Bracket connector (bracket-arm style) ── */
 
 .bracket-connector {
   display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  width: 52px;
+  transition: opacity 0.4s ease;
+}
+
+/* Merge bracket ] (left side — gathers from prev column) */
+.bracket-arm-merge {
+  width: 10px;
+  border-right: 2px solid var(--line);
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  border-radius: 0 5px 5px 0;
+  margin: 18% 0;
+  transition: border-color 0.4s ease;
+}
+
+/* Horizontal bridge (middle) */
+.bracket-arm-bridge {
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  flex-shrink: 0;
   position: relative;
 }
 
-.bracket-connector-track {
+.bracket-arm-bridge::before {
+  content: "";
   position: absolute;
-  width: 100%;
-  height: 2px;
-  top: 50%;
   left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
   background: var(--line);
   transition: background 0.4s ease;
 }
 
-.bracket-connector-chevron {
-  width: 10px;
-  height: 18px;
-  color: var(--line);
+.bracket-arm-label {
   position: relative;
   z-index: 1;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: var(--background);
+  padding: 0.1rem 0.25rem;
+  border-radius: 2px;
   transition: color 0.4s ease;
 }
 
-.bracket-connector.lit .bracket-connector-track {
+/* Split bracket [ (right side — distributes to next column) */
+.bracket-arm-split {
+  width: 10px;
+  border-left: 2px solid var(--line);
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  border-radius: 5px 0 0 5px;
+  margin: 18% 0;
+  transition: border-color 0.4s ease;
+}
+
+/* Lit state */
+.bracket-connector.lit .bracket-arm-merge,
+.bracket-connector.lit .bracket-arm-split {
+  border-color: var(--accent);
+}
+
+.bracket-connector.lit .bracket-arm-bridge::before {
   background: var(--accent);
 }
 
-.bracket-connector.lit .bracket-connector-chevron {
+.bracket-connector.lit .bracket-arm-label {
   color: var(--accent);
 }
 
@@ -329,7 +371,7 @@ a {
   color: var(--accent);
 }
 
-/* Mobile vertical bracket */
+/* ── Mobile: vertical bracket ── */
 
 @media (max-width: 768px) {
   .bracket {
@@ -358,17 +400,46 @@ a {
 
   .bracket-connector {
     width: 100%;
-    height: 32px;
+    height: 40px;
+    flex-direction: row;
+    align-items: center;
   }
 
-  .bracket-connector-track {
+  .bracket-arm-merge {
+    width: auto;
+    height: 10px;
+    flex: 0 0 10px;
+    margin: 0 18%;
+    border-right: none;
+    border-bottom: 2px solid var(--line);
+    border-left: 2px solid var(--line);
+    border-right: 2px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .bracket-arm-bridge {
+    flex: 1;
+  }
+
+  .bracket-arm-bridge::before {
+    left: 50%;
+    right: auto;
+    top: 0;
+    bottom: 0;
     width: 2px;
     height: 100%;
-    top: 0;
-    left: 50%;
   }
 
-  .bracket-connector-chevron {
-    transform: rotate(90deg);
+  .bracket-arm-split {
+    width: auto;
+    height: 10px;
+    flex: 0 0 10px;
+    margin: 0 18%;
+    border-left: 2px solid var(--line);
+    border-right: 2px solid var(--line);
+    border-top: 2px solid var(--line);
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
   }
 }
