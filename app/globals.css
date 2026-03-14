@@ -13,6 +13,10 @@
   --green-soft: rgba(21, 128, 61, 0.1);
   --gold: #a16207;
   --gold-soft: rgba(161, 98, 7, 0.1);
+  --blue: #1d4ed8;
+  --blue-soft: rgba(29, 78, 216, 0.1);
+  --purple: #7c3aed;
+  --purple-soft: rgba(124, 58, 237, 0.1);
 }
 
 @theme inline {

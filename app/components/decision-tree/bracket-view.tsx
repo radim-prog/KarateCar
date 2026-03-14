@@ -10,10 +10,12 @@ const tierMeta: Record<
   number,
   { label: string; name: string; color: string }
 > = {
-  1: { label: "TIER 1", name: "Auto zdarma", color: "var(--green)" },
-  2: { label: "TIER 2", name: "Zvýhodněné pořízení", color: "var(--accent)" },
-  3: { label: "TIER 3", name: "Budování základny", color: "var(--gold)" },
-  4: { label: "TIER 4", name: "Záložní plán", color: "var(--muted)" },
+  1: { label: "FÁZE 1", name: "Auto zdarma", color: "var(--green)" },
+  2: { label: "FÁZE 2", name: "Zvýhodněné pořízení", color: "var(--accent)" },
+  3: { label: "FÁZE 3", name: "Dotace a granty", color: "var(--blue)" },
+  4: { label: "FÁZE 4", name: "Vlastní příjmy", color: "var(--purple)" },
+  5: { label: "FÁZE 5", name: "Kombinované financování", color: "var(--gold)" },
+  6: { label: "FÁZE 6", name: "Poslední záchrana", color: "var(--muted)" },
 };
 
 const diffLabel = { low: "Snadné", medium: "Střední", high: "Náročné" };
@@ -23,14 +25,14 @@ export function BracketView() {
   const { state, setOutcome, setNote, resetNode } = useTreeState();
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const tiers = [1, 2, 3, 4];
+  const tiers = [1, 2, 3, 4, 5, 6];
   const byTier = (tier: number) =>
     decisionNodes
       .filter((n) => n.tier === tier)
       .sort((a, b) => a.order - b.order);
 
   function isTierActive(tier: number) {
-    if (tier === 1 || tier === 4) return true;
+    if (tier === 1 || tier === 6) return true;
     for (let t = 1; t < tier; t++) {
       if (byTier(t).some((n) => state.outcomes[n.id] === "ne")) return true;
     }
@@ -38,7 +40,7 @@ export function BracketView() {
   }
 
   function isConnectorLit(toTier: number) {
-    if (toTier === 4) return true;
+    if (toTier === 6) return true;
     for (let t = 1; t < toTier; t++) {
       if (byTier(t).some((n) => state.outcomes[n.id] === "ne")) return true;
     }
@@ -100,7 +102,7 @@ export function BracketView() {
                   {tierMeta[tier].name}
                 </span>
                 {tierHasAno(tier) && (
-                  <span className="bracket-col-win">FUNGUJE</span>
+                  <span className="bracket-col-win">POTVRZENO</span>
                 )}
               </div>
 
