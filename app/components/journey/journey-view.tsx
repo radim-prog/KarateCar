@@ -13,11 +13,9 @@ const nodesById = new Map(decisionNodes.map((n) => [n.id, n]));
 export function JourneyView() {
   const { state } = useTreeState();
 
-  // Check if a phase is active (phase 0 always active, others when previous has a NE)
-  function isPhaseActive(index: number): boolean {
-    if (index === 0) return true;
-    const prevPhase = PHASE_CONFIG[index - 1];
-    return prevPhase.nodeIds.some((id) => state.outcomes[id] === "ne");
+  // All phases are always visible and accessible
+  function isPhaseActive(_index: number): boolean {
+    return true;
   }
 
   // Resolve data for each phase

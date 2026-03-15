@@ -61,6 +61,30 @@ export function PhaseNodeDetail({ node }: { node: DecisionNode }) {
         </div>
       </div>
 
+      {/* Zdroje a odkazy */}
+      {node.sources && node.sources.length > 0 && (
+        <div className="mt-5">
+          <h4 className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] mb-2">
+            Zdroje a odkazy
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {node.sources.map((src) => (
+              <a
+                key={src.url}
+                href={src.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--accent)] hover:border-[var(--accent)]/50 hover:bg-[var(--accent-soft)] transition"
+                title={src.note}
+              >
+                <span className="opacity-60">&nearr;</span>
+                {src.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Další postup */}
       {outcome !== "pending" && (
         <div

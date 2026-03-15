@@ -16,22 +16,16 @@ export function VehicleSelector({
 }: VehicleSelectorProps) {
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-3">Vyberte vůz</h2>
+      <h2 className="text-lg font-semibold mb-3">Vyberte variantu</h2>
       <div className="grid gap-3 sm:grid-cols-2">
         {vehicles.map((v) => {
           const active = v.id === selectedId;
-          const conditionLabel =
-            v.condition === "new"
-              ? "Nový"
-              : v.condition === "demo"
-                ? "Předváděcí"
-                : "Ojetý";
           return (
             <button
               key={v.id}
               type="button"
               onClick={() => onSelect(v.id)}
-              className={`text-left rounded-xl border-2 p-4 transition ${
+              className={`text-left rounded-xl border-2 p-5 transition ${
                 active
                   ? "border-[var(--accent)] bg-[var(--accent-soft)]"
                   : "border-[var(--line)] bg-[var(--surface)] hover:border-[var(--accent)]/50"
@@ -39,7 +33,7 @@ export function VehicleSelector({
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-medium text-[var(--muted)] uppercase">
-                  {v.brand} &middot; {v.capacity}
+                  {v.capacity}
                 </span>
                 <span
                   className={`text-xs rounded-md px-2 py-0.5 font-medium ${
@@ -48,7 +42,7 @@ export function VehicleSelector({
                       : "bg-[var(--green-soft)] text-[var(--green)]"
                   }`}
                 >
-                  {conditionLabel}
+                  {v.condition === "new" ? "Nový" : "Ojetý"}
                 </span>
               </div>
               <h3 className="text-base font-semibold">{v.label}</h3>

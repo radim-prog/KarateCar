@@ -91,8 +91,7 @@ function Calculator() {
       {/* Cross links */}
       <PageCrossLinks
         links={[
-          { href: "/outreach", label: "Kontakty a oslovení" },
-          { href: "/dokumenty", label: "Hotové šablony" },
+          { href: "/", label: "Zpět na průvodce" },
           { href: "/podklady", label: "Zdroje a podklady" },
         ]}
       />

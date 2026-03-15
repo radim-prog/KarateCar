@@ -1,15 +1,5 @@
-import { legalNotes, sources } from "../data";
+import { legalNotes } from "../data";
 import { PageCrossLinks } from "../components/page-cross-links";
-
-const sourceCategories = ["Oddíl", "Dotace", "Automobilky", "Právní"] as const;
-
-const groupedSources = sourceCategories.reduce<Record<string, typeof sources>>(
-  (acc, cat) => {
-    acc[cat] = sources.filter((s) => s.category === cat);
-    return acc;
-  },
-  {},
-);
 
 export default function PodkladyPage() {
   return (
@@ -79,39 +69,6 @@ export default function PodkladyPage() {
           { href: "/kalkulacka", label: "Náklady" },
         ]}
       />
-
-      {/* Sources - grouped by category */}
-      <section>
-        <h2 className="text-lg font-semibold mb-4">Všechny zdroje</h2>
-        <div className="space-y-4">
-          {sourceCategories.map((cat) => {
-            const catSources = groupedSources[cat];
-            if (!catSources || catSources.length === 0) return null;
-            return (
-              <div key={cat}>
-                <h3 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-2">
-                  {cat}
-                </h3>
-                <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] divide-y divide-[var(--line)]">
-                  {catSources.map((source) => (
-                    <div key={source.url} className="px-4 py-3">
-                      <a
-                        href={source.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-sm font-medium text-[var(--accent)] hover:underline"
-                      >
-                        {source.label}
-                      </a>
-                      <p className="mt-0.5 text-xs text-[var(--muted)]">{source.note}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
     </div>
   );
 }
