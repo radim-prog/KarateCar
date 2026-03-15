@@ -1,46 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { fundingSources, vehicleOptions } from "../data";
 import { TreeStateProvider, useTreeState } from "../components/tree-state-provider";
 import { VehicleSelector } from "../components/calculator/vehicle-selector";
-import { FinancingTabs } from "../components/calculator/financing-tabs";
-import type { FinancingTab } from "../components/calculator/financing-tabs";
+import { FinancingOverview } from "../components/calculator/financing-overview";
 import { RunningCosts } from "../components/calculator/running-costs";
 import { FundingStack } from "../components/calculator/funding-stack";
 import { MonthlyBalance } from "../components/calculator/monthly-balance";
 import { PageCrossLinks } from "../components/page-cross-links";
 
-function getMonthlyPayment(
-  vehicle: (typeof vehicleOptions)[number],
-  tab: FinancingTab,
-): number {
-  if (tab === "lease" && vehicle.leaseMonthly) return vehicle.leaseMonthly;
-  if (tab === "loan" && vehicle.loanMonthly) return vehicle.loanMonthly;
-  return 0;
-}
-
 function Calculator() {
   const [selectedId, setSelectedId] = useState(vehicleOptions[0]?.id ?? "");
-  const [financingTab, setFinancingTab] = useState<FinancingTab>("lease");
   const [runningTotal, setRunningTotal] = useState(0);
   const { state } = useTreeState();
 
   const selected =
     vehicleOptions.find((v) => v.id === selectedId) ?? vehicleOptions[0];
-
-  // Reset financing tab when vehicle changes
-  useEffect(() => {
-    if (!selected) return;
-    if (selected.leaseMonthly) {
-      setFinancingTab("lease");
-    } else if (selected.loanMonthly) {
-      setFinancingTab("loan");
-    } else {
-      setFinancingTab("cash");
-    }
-  }, [selected?.id]);
 
   // Compute monthly funding from active sources (only recurring ones)
   const monthlyFundingSources = fundingSources.filter((fs) => {
@@ -66,7 +43,8 @@ function Calculator() {
 
   if (!selected) return null;
 
-  const monthlyPayment = getMonthlyPayment(selected, financingTab);
+  // Use the best available monthly payment for balance
+  const monthlyPayment = selected.leaseMonthly ?? selected.loanMonthly ?? 0;
 
   return (
     <div className="space-y-8 max-w-4xl">
@@ -74,11 +52,11 @@ function Calculator() {
         <div className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] mb-2">
           Financování a náklady
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight">Kalkulačka</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight">Kolik to bude stát</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
-          Vyberte vůz, zvolte typ financování a uvidíte reálné měsíční náklady.
-          Zdroje se napojují na rozhodovací strom — čím víc strategií označíte,
-          tím víc zdrojů se promítne do bilance.
+          Vyberte auto a uvidíte všechny varianty financování i měsíční provoz
+          na jednom místě. Zdroje se napojují na rozhodovací strom — čím víc
+          strategií označíte, tím víc zdrojů se promítne do bilance.
         </p>
       </div>
 
@@ -89,22 +67,17 @@ function Calculator() {
         onSelect={setSelectedId}
       />
 
-      {/* Financing + running costs side by side on desktop */}
+      {/* Financing overview + running costs side by side on desktop */}
       <div className="grid gap-6 lg:grid-cols-2">
-        <FinancingTabs
-          vehicle={selected}
-          activeTab={financingTab}
-          onTabChange={setFinancingTab}
-        />
+        <FinancingOverview vehicle={selected} />
         <RunningCosts
           vehicle={selected}
-          financingType={financingTab}
           onTotalChange={handleRunningTotalChange}
         />
       </div>
 
       {/* Monthly balance */}
-      {financingTab !== "cash" && (
+      {monthlyPayment > 0 && (
         <MonthlyBalance
           monthlyPayment={monthlyPayment}
           runningCosts={runningTotal}

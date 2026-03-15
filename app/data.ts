@@ -12,12 +12,13 @@ export type ActionPhase = {
   actions: string[];
 };
 
-export type InstitutionTarget = {
-  name: string;
-  lane: string;
-  ask: string;
-  whyNow: string;
-  source?: SourceLink;
+export type LeadStatus = "ceka" | "osloveno" | "odpoved" | "schuzka" | "dohodnuto" | "odmitli";
+
+export type PipelineStep = {
+  order: number;
+  label: string;
+  timing: string;
+  description: string;
 };
 
 export type LegalNote = {
@@ -34,6 +35,7 @@ export type Lead = {
   ask: string;
   contact: string;
   source: SourceLink;
+  status?: LeadStatus;
 };
 
 export type TemplateBlock = {
@@ -43,6 +45,7 @@ export type TemplateBlock = {
   summary: string;
   body: string;
   usage: string[];
+  pipeline: PipelineStep[];
 };
 
 // ── Decision Tree Types ──
@@ -206,127 +209,106 @@ export const sources: SourceLink[] = [
   },
 ];
 
-export const institutionTargets: InstitutionTarget[] = [
-  {
-    name: "Škoda Auto Kvasiny / regionální vedení",
-    lane: "Automobilky",
-    ask: "5leté regionální mobilitní partnerství pro 9místný vůz nebo jeho akontaci",
-    whyNow: "Je to nejpřirozenější lokální příběh a největší reputační páka v okolí.",
-    source: sources[13],
-  },
-  {
-    name: "Nadační fond Škoda Auto",
-    lane: "Nadace",
-    ask: "Ověření vhodného grantového nebo individuálního rámce pro mobilitu mládežnického sportu",
-    whyNow: "Má veřejně viditelnou roli v regionální podpoře a stojí za to jít po konkrétním fitu programu.",
-    source: sources[6],
-  },
-  {
-    name: "Hyundai Motor Czech – flotilové centrum",
-    lane: "Automobilky",
-    ask: "Zvýhodněný flotilový nebo zaměstnanecky podobný režim pro spolek s veřejným dopadem",
-    whyNow: "Hyundai veřejně mluví o flotilových a zvýhodněných skupinách, takže se dá žádat o individuální výjimku nebo zvýhodněnou nabídku pro neziskový subjekt.",
-    source: sources[8],
-  },
-  {
-    name: "Toyota prodejce + Toyota Financial Services / KINTO ONE",
-    lane: "Automobilky",
-    ask: "Konkrétní nabídka Proace Verso Kombi 9 míst, 5 let, 20 až 30 tisíc km ročně",
-    whyNow: "Toyota už veřejně ukazuje financovací rámec pro Proace Verso, takže cesta k reálné nabídce je krátká.",
-    source: sources[9],
-  },
-  {
-    name: "Ford prodejce / Tourneo Custom",
-    lane: "Automobilky",
-    ask: "Reálná nabídka 9místného Tourneo Custom včetně pojištění a servisu",
-    whyNow: "Ford má veřejnou vstupní cenu a silnou užitkovou platformu, což je dobré srovnání i vyjednávací tlak na ostatní.",
-    source: sources[11],
-  },
-  {
-    name: "Volkswagen Užitkové vozy / Porsche Česká republika",
-    lane: "Automobilky",
-    ask: "Caravelle nebo obdobná 9místná varianta v regionálním nebo flotilovém režimu",
-    whyNow: "Kvůli vazbě na Kvasiny a skupinu VW je to silný strategický kontakt, i když veřejná cena není jednoduše vystavená.",
-    source: sources[12],
-  },
-  {
-    name: "Město Rychnov nad Kněžnou",
-    lane: "Veřejné finance",
-    ask: "Pravidelná provozní podpora a potvrzení, jaké městské linky umí uvolnit rozpočet klubu",
-    whyNow: "Město je nejblíž a má smysl ho mít na palubě dřív, než klub přijde za velkými firmami.",
-    source: sources[2],
-  },
-  {
-    name: "Královéhradecký kraj",
-    lane: "Veřejné finance",
-    ask: "Programy pro sport, volný čas a případné individuální dotace",
-    whyNow: "Krajská podpora může být důležitá pro provoz, reprezentaci a uvolnění vlastních peněz klubu.",
-    source: sources[3],
-  },
-  {
-    name: "Národní sportovní agentura",
-    lane: "Veřejné finance",
-    ask: "Provozní podporu typu Můj klub používat jako odlehčení rozpočtu, ne jako přímý nákup auta",
-    whyNow: "Je potřeba oddělit, co je vhodné pro provoz a co není vhodné pro vozidlo, aby klub netrávil čas slepou cestou.",
-    source: sources[5],
-  },
-  {
-    name: "Lokální firmy: výroba, stavebnictví, účetnictví, zdravotnictví, služby",
-    lane: "Měsíční partneři",
-    ask: "Partnerství 1 000 až 5 000 Kč měsíčně s jasným balíčkem viditelnosti",
-    whyNow: "Tahle vrstva vytváří trvalé peněžní tok. Má začít hned, i když se zároveň řeší velký partner.",
-  },
-];
 
 export const actionPhases: ActionPhase[] = [
   {
-    title: "Příprava argumentů",
-    window: "Týden 1",
-    outcome: "Nabídkový materiál, čísla výjezdů a jasný model toho, co klub chce.",
+    title: "Zmapování situace",
+    window: "Týden 0",
+    outcome: "Jasný přehled o tom, co oddíl potřebuje a jaké má zdroje.",
     actions: [
-      "Sepsat posledních 12 měsíců výjezdů: počet akcí, počet lidí, kilometry, proč nestačí osobáky.",
-      "Připravit jednostránkový klubový profil a dvoustránkové mobilitní shrnutí.",
+      "Sepsat posledních 12 měsíců výjezdů: počet akcí, počet lidí, kilometry.",
+      "Zjistit aktuální rozpočet oddílu a volné prostředky.",
       "Stanovit tři cíle: 9místné auto, menší auto, záložní varianta ojetina.",
     ],
   },
   {
-    title: "Jednání s klíčovými partnery",
-    window: "Týden 2 až 3",
-    outcome: "První reálné odpovědi od automotive partnerů a města.",
+    title: "Příprava materiálů",
+    window: "Týden 1",
+    outcome: "Nabídkový materiál, profil oddílu a mobilitní shrnutí připravené k rozeslání.",
     actions: [
-      "Oslovit Škoda Auto Kvasiny a Nadační fond Škoda Auto s regionální mobilitní žádostí.",
-      "Poslat stejné zadání Hyundai, Toyota, Fordu a VW Užitkové vozy.",
-      "Domluvit schůzku s městem a potvrdit veřejné podpory, které lze skládat vedle auta.",
+      "Připravit jednostránkový klubový profil s čísly a fotkami.",
+      "Vytvořit dvoustránkové mobilitní shrnutí s konkrétními požadavky.",
+      "Nachystat partnerské balíčky pro firmy (logo, viditelnost, vyúčtování).",
     ],
   },
   {
-    title: "Klub partnerů",
-    window: "Týden 3 až 6",
-    outcome: "Opakovatelné měsíční peněžní tok a první podpisy.",
+    title: "Oslovení Škoda Auto",
+    window: "Týden 1–2",
+    outcome: "Odeslaná žádost na Škoda Auto Kvasiny a Nadační fond Škoda Auto.",
     actions: [
-      "Vytvořit tři balíčky partnerství včetně loga na webu, banneru a vyúčtováníové fotografie z výjezdů.",
-      "Obvolat lokální firmy a nabízet měsíční partnerství, ne jednorázové neurčité dary.",
-      "Spustit veřejné počítadlo akontace nebo servisní rezervy.",
+      "Poslat e-mail regionálnímu vedení Škoda Auto Kvasiny.",
+      "Oslovit Nadační fond Škoda Auto s grantovou žádostí.",
+      "Navázat telefonicky do 2 dnů po odeslání.",
     ],
   },
   {
-    title: "Rozhodnutí o modelu auta",
-    window: "Týden 6 až 10",
-    outcome: "Výběr mezi novým vozem, operativním leasingem, balonem nebo předváděcí záložní variantou.",
+    title: "Oslovení konkurenčních automobilek",
+    window: "Týden 2–3",
+    outcome: "Rozeslané žádosti na Hyundai, Toyota, Ford a VW.",
     actions: [
-      "Porovnat minimálně tři závazné nabídky: cena, nájezd, servis, pojištění, sankce za km, odkup.",
+      "Poslat přizpůsobený e-mail na flotilová centra Hyundai, Toyota, Ford.",
+      "Zdůraznit příležitost viditelnosti v regionu Škoda.",
+      "Shromáždit první reakce a nabídky.",
+    ],
+  },
+  {
+    title: "Oslovení lokálních firem",
+    window: "Týden 2–4",
+    outcome: "Nabídky partnerství rozeslané regionálním firmám.",
+    actions: [
+      "Obvolat a napsat lokální firmy s nabídkou měsíčního partnerství.",
+      "Nabízet konkrétní balíčky (1 000 / 2 500 / 5 000 Kč měsíčně).",
+      "Sledovat reakce a plánovat osobní schůzky.",
+    ],
+  },
+  {
+    title: "Rozhovor s městem a krajem",
+    window: "Týden 3–4",
+    outcome: "Potvrzení dostupných dotací a veřejných podpor.",
+    actions: [
+      "Domluvit schůzku s odborem sportu města Rychnov.",
+      "Zjistit možnosti krajských dotací pro sport a mládež.",
+      "Potvrdit, jaké veřejné podpory lze skládat vedle auta.",
+    ],
+  },
+  {
+    title: "Kampaň mezi rodiči a oddílem",
+    window: "Týden 3–5",
+    outcome: "Zapojení rodičů a členů do podpory a sbírání kontaktů.",
+    actions: [
+      "Rozeslat letáky a zprávy do rodičovských skupin.",
+      "Osobně oslovit rodiče na trénincích.",
+      "Sbírat kontakty na firmy a jednatele přes osobní doporučení.",
+    ],
+  },
+  {
+    title: "Porovnání nabídek",
+    window: "Týden 6–8",
+    outcome: "Přehled všech nabídek a zdrojů financování na jednom místě.",
+    actions: [
+      "Shromáždit závazné nabídky od minimálně 3 značek.",
+      "Porovnat: cena, nájezd, servis, pojištění, sankce za km, odkup.",
       "Dopočítat měsíční zátěž proti skutečně podepsaným partnerstvím.",
-      "Rozhodnout, jestli klub spouští rovnou i menší auto, nebo ho nechá na druhou fázi.",
     ],
   },
   {
-    title: "Podpis a vyúčtování",
+    title: "Rozhodnutí o modelu a financování",
+    window: "Týden 8–10",
+    outcome: "Vybraný vůz a potvrzený model financování.",
+    actions: [
+      "Vybrat mezi novým vozem, leasingem a předváděcí variantou.",
+      "Potvrdit servisní rezervu a měsíční příjmy od partnerů.",
+      "Rozhodnout, jestli klub spouští rovnou i menší auto.",
+    ],
+  },
+  {
+    title: "Podpis a rozjezd",
     window: "Týden 10+",
-    outcome: "Auto je na cestě a partner ví, jak bude jeho podpora vidět.",
+    outcome: "Auto je na cestě a partneři vědí, jak bude jejich podpora vidět.",
     actions: [
       "Podepsat smlouvu na auto až po potvrzení servisní rezervy.",
-      "Nastavit kvartální report pro partnery: akce, najeté km, medaile, fotky.",
-      "Připravit druhou vlnu pro menší auto nebo obnovu za 2 až 3 roky.",
+      "Nastavit kvartální report pro partnery: akce, najeté km, fotky.",
+      "Připravit druhou vlnu pro menší auto nebo obnovu za 2–3 roky.",
     ],
   },
 ];
@@ -468,10 +450,13 @@ export const localCompanyLeads: Lead[] = [
       note: "Oficiální kontaktní stránka PODA.",
     },
   },
+];
+
+export const communityLeads: Lead[] = [
   {
     name: "Rodiče a členové s vlastní firmou",
-    kind: "Nejteplejší kontakt",
-    angle: "Nejsnazší vstup, protože oddíl už má vztah a důvěru.",
+    kind: "Osobní kontakt",
+    angle: "Nejsnazší vstup — oddíl už má vztah a důvěru. Přes rodiče se dostanete k jednatelům a majitelům firem.",
     ask: "500 až 2 500 Kč měsíčně nebo propojení na jednatele a majitele firem v okolí.",
     contact: "Řešit přes interní leták a osobní oslovení na trénincích, ne jen veřejným postem.",
     source: {
@@ -480,30 +465,19 @@ export const localCompanyLeads: Lead[] = [
       note: "Oddíl má vlastní komunitu, která je první vrstvou pro osobní doporučení.",
     },
   },
-];
-
-export const warmIntroLeads: Lead[] = [
   {
-    name: "MATRIX a.s. a GenesisRK",
-    kind: "Stávající nebo přirozeně blízký partner",
-    angle: "Tohle nejsou studené kontakty. První krok má být osobní navázání, ne hromadný e-mail.",
-    ask: "Krátká schůzka nebo hovor k navýšení podpory na měsíční mobilitní partnerství.",
-    contact: "Začít přes veřejně známé kontakty a současně přes vazbu oddílu na stávající spolupráci.",
-    source: sources[1],
-  },
-  {
-    name: "PODA, Hájek-Cargo, HAMROZI, STL Express",
-    kind: "Teplý kontakt z partnerské stránky SHIN-KYO",
-    angle: "Mají už pozitivní vztah k oddílu, takže je reálné jít rovnou po konkrétní částce nebo cíli.",
+    name: "GenesisRK, PODA, Hájek-Cargo",
+    kind: "Partner oddílu",
+    angle: "Stávající partneři uvedení na webu oddílu. Mají pozitivní vztah, nejde o studený kontakt.",
     ask: "Převést obecnou podporu na jasný balíček: servisní rezerva, měsíční splátka nebo spoluúčast na akontaci.",
-    contact: "Nejdřív využít interní vztah a teprve potom dohledávat konkrétní oddělení nebo účetní workflow.",
+    contact: "Nejdřív využít interní vztah a teprve potom dohledávat konkrétní oddělení.",
     source: sources[1],
   },
   {
-    name: "Rodiče a členové s firmou nebo manažerskou rolí",
-    kind: "Nejrychlejší osobní doporučení",
+    name: "Osobní doporučení přes rodiče",
+    kind: "Osobní kontakt",
     angle: "Nejlepší cesta k jednateli nebo správci vozového parku bývá přes osobní doporučení, ne přes recepci.",
-    ask: "Vyžádat kontakt na rozhodovací osobu a poslat krátký osobní forward s doporučením.",
+    ask: "Vyžádat kontakt na rozhodovací osobu a poslat krátký osobní zprávu s doporučením.",
     contact: "Řešit interním letákem, členským e-mailem a osobně na tréninku.",
     source: sources[0],
   },
@@ -511,14 +485,43 @@ export const warmIntroLeads: Lead[] = [
 
 export const documentTemplates: TemplateBlock[] = [
   {
-    id: "automotive",
-    label: "Automobilce",
+    id: "automotive-skoda",
+    label: "Pro Škodu a NFSA",
     subject: "Regionální mobilitní partnerství pro SHIN-KYO Rychnov nad Kněžnou",
-    summary: "První kontakt pro Škodu, Hyundai, Toyotu, Ford nebo prodejce.",
-    body: `Dobrý den,\n\nobracím se za karate oddíl SHIN-KYO Rychnov nad Kněžnou. Pro děti, mládež a reprezentaci oddílu řešíme dlouhodobou mobilitu na soutěže a soustředění po celé ČR a podle možností i do zahraničí.\n\nHledáme partnera pro 9místné vozidlo, ideálně formou:\n- zvýhodněné dlouhodobé zápůjčky,\n- individuálních flotilových podmínek,\n- nebo příspěvku na akontaci a rozjezd financování.\n\nNejde nám o luxusní výbavu. Potřebujeme spolehlivé a nákladově rozumné auto, které bude pravidelně vozit sportovce na akce a zároveň dává smysl i z hlediska regionálního a reputačního dopadu.\n\nZa partnerství nabízíme:\n- jasně viditelnou regionální vazbu,\n- prezentaci partnera na webu a při komunikaci oddílu,\n- průběžné vyúčtování o využití vozu,\n- konkrétní příběh podpory mládežnického sportu.\n\nPokud to pro vás dává smysl, pošlu stručné dvoustránkové shrnutí a rád navrhnu krátký hovor nebo osobní schůzku.\n\nDěkuji a zdravím\n[JMÉNO]\n[ROLE V ODDÍLU]\n[TELEFON]\n[E-MAIL]`,
+    summary: "První kontakt pro Škodu Auto a Nadační fond Škoda Auto — důraz na regionální vazbu Kvasiny.",
+    body: `Dobrý den,\n\nobracím se za karate oddíl SHIN-KYO Rychnov nad Kněžnou. Pro děti, mládež a reprezentaci oddílu řešíme dlouhodobou mobilitu na soutěže a soustředění po celé ČR a podle možností i do zahraničí.\n\nSídlíme necelých 15 kilometrů od závodu v Kvasinách a vaše značka je pro náš region přirozeným symbolem. Podpora místního mládežnického sportu od Škoda Auto by měla silný regionální dopad.\n\nHledáme partnera pro 9místné vozidlo, ideálně formou:\n- zvýhodněné dlouhodobé zápůjčky,\n- individuálních flotilových podmínek,\n- nebo příspěvku na akontaci a rozjezd financování.\n\nNejde nám o luxusní výbavu. Potřebujeme spolehlivé a nákladově rozumné auto, které bude pravidelně vozit sportovce na akce a zároveň dává smysl i z hlediska regionálního a reputačního dopadu.\n\nZa partnerství nabízíme:\n- jasně viditelnou regionální vazbu,\n- prezentaci partnera na webu a při komunikaci oddílu,\n- průběžné vyúčtování o využití vozu,\n- konkrétní příběh podpory mládežnického sportu.\n\nPokud to pro vás dává smysl, pošlu stručné dvoustránkové shrnutí a rád navrhnu krátký hovor nebo osobní schůzku.\n\nDěkuji a zdravím\n[JMÉNO]\n[ROLE V ODDÍLU]\n[TELEFON]\n[E-MAIL]`,
     usage: [
-      "Použít pro první vlnu na Škodu, Hyundai, Toyota, Ford, VW a prodejce.",
+      "Použít pro Škoda Auto Kvasiny a Nadační fond Škoda Auto.",
       "Do přílohy přidat jednostránkový profil oddílu a stručné mobilitní shrnutí.",
+      "Zdůraznit blízkost ke Kvasinám — to je hlavní argument.",
+    ],
+    pipeline: [
+      { order: 1, label: "Odeslat e-mail", timing: "Den 0", description: "Poslat e-mail s profilem oddílu v příloze." },
+      { order: 2, label: "Zavolat", timing: "Den 2", description: "Krátký telefonát pro ověření, že se e-mail dostal ke správné osobě." },
+      { order: 3, label: "Připomínkový e-mail", timing: "Den 5", description: "Pokud bez odpovědi: krátký připomínkový e-mail." },
+      { order: 4, label: "Schůzka nebo hovor", timing: "Týden 2", description: "Osobní schůzka nebo videohovor k projednání možností." },
+      { order: 5, label: "Konkrétní nabídka", timing: "Týden 3–4", description: "Dostat na stůl konkrétní nabídku podmínek." },
+      { order: 6, label: "Porovnat a rozhodnout", timing: "Týden 4–6", description: "Porovnat s nabídkami od ostatních značek a rozhodnout." },
+    ],
+  },
+  {
+    id: "automotive-competition",
+    label: "Pro konkurenční automobilky",
+    subject: "Příležitost pro podporu mládežnického sportu v regionu Škoda Auto",
+    summary: "Text pro Hyundai, Toyota, Ford a další — důraz na viditelnost v regionu, kde dominuje jedna značka.",
+    body: `Dobrý den,\n\nobracím se za karate oddíl SHIN-KYO Rychnov nad Kněžnou. Pro děti, mládež a reprezentaci oddílu řešíme dlouhodobou mobilitu na soutěže a soustředění po celé ČR.\n\nNáš oddíl sídlí v regionu, kde dominuje jedna automobilová značka. Právě proto je vaše podpora místního sportu viditelná příležitost, jak se odlišit a ukázat, že vaší značce záleží na komunitách i mimo hlavní centra.\n\nHledáme partnera pro 9místné vozidlo, ideálně formou:\n- zvýhodněné dlouhodobé zápůjčky,\n- individuálních flotilových podmínek,\n- nebo příspěvku na akontaci a rozjezd financování.\n\nPotřebujeme spolehlivé a nákladově rozumné auto pro pravidelné výjezdy sportovců. Za partnerství nabízíme:\n- prezentaci partnera na voze, webu a při komunikaci oddílu,\n- průběžné vyúčtování o využití vozu,\n- konkrétní příběh podpory mládežnického sportu v regionu.\n\nPokud to pro vás dává smysl, pošlu stručné dvoustránkové shrnutí a rád navrhnu krátký hovor.\n\nDěkuji a zdravím\n[JMÉNO]\n[ROLE V ODDÍLU]\n[TELEFON]\n[E-MAIL]`,
+    usage: [
+      "Použít pro Hyundai, Toyota, Ford, VW a další konkurenční značky.",
+      "Hlavní argument: viditelnost v regionu, kde dominuje Škoda.",
+      "Do přílohy přidat profil oddílu a mobilitní shrnutí.",
+    ],
+    pipeline: [
+      { order: 1, label: "Odeslat e-mail", timing: "Den 0", description: "Poslat e-mail s profilem oddílu v příloze." },
+      { order: 2, label: "Zavolat", timing: "Den 2", description: "Krátký telefonát pro navázání kontaktu." },
+      { order: 3, label: "Připomínkový e-mail", timing: "Den 5", description: "Pokud bez odpovědi: krátký připomínkový e-mail." },
+      { order: 4, label: "Schůzka nebo hovor", timing: "Týden 2", description: "Osobní schůzka nebo videohovor k projednání nabídky." },
+      { order: 5, label: "Konkrétní nabídka", timing: "Týden 3–4", description: "Dostat na stůl konkrétní nabídku podmínek." },
+      { order: 6, label: "Porovnat a rozhodnout", timing: "Týden 4–6", description: "Porovnat s ostatními nabídkami a rozhodnout." },
     ],
   },
   {
@@ -531,6 +534,13 @@ export const documentTemplates: TemplateBlock[] = [
       "Poslat lokálním firmám a do 48 hodin navázat telefonem.",
       "V textu je lepší nechat jen jednu konkrétní prosbu, ne všechny varianty najednou.",
     ],
+    pipeline: [
+      { order: 1, label: "Odeslat e-mail", timing: "Den 0", description: "Poslat e-mail s krátkým shrnutím akce." },
+      { order: 2, label: "Zavolat", timing: "Den 1–2", description: "Navázat telefonicky, odkázat na e-mail." },
+      { order: 3, label: "Připomínka", timing: "Den 5", description: "Pokud bez reakce: krátká připomínka e-mailem." },
+      { order: 4, label: "Osobní schůzka", timing: "Týden 2", description: "Domluvit krátkou schůzku s konkrétní nabídkou." },
+      { order: 5, label: "Podpis partnerství", timing: "Týden 3–4", description: "Podepsat partnerskou smlouvu a nastavit platby." },
+    ],
   },
   {
     id: "parents",
@@ -541,15 +551,26 @@ export const documentTemplates: TemplateBlock[] = [
       "Použít jako A5 leták, text do rodičovské skupiny i krátký klubový e-mail.",
       "Na papírové verzi doplnit QR kód na kontakt nebo formulář pro zájemce.",
     ],
+    pipeline: [
+      { order: 1, label: "Rozeslat leták", timing: "Den 0", description: "Rozeslat leták přes e-mail a WhatsApp skupiny." },
+      { order: 2, label: "Osobní oslovení", timing: "Týden 1", description: "Na tréninku osobně oslovit rodiče a vysvětlit projekt." },
+      { order: 3, label: "Sbírat kontakty", timing: "Týden 1–2", description: "Sbírat kontakty na firmy přes rodiče." },
+      { order: 4, label: "Přehled stavu", timing: "Týden 3", description: "Sdílet aktuální stav sbírky a poděkovat přispěvatelům." },
+    ],
   },
   {
-    id: "navázání",
-    label: "Navázání po telefonu",
+    id: "navazani",
+    label: "Skript pro navázání",
     summary: "Stručný skript pro navázání na odeslaný e-mail bez zbytečného vysvětlování.",
     body: `Dobrý den, tady [JMÉNO] z karate oddílu SHIN-KYO Rychnov nad Kněžnou.\n\nPosílali jsme krátký e-mail k mobilitě dětí a výjezdům na soutěže. Nevolám kvůli dlouhé prezentaci, jen chci ověřit, jestli se to dostalo ke správnému člověku a jestli má smysl poslat stručné dvoustránkové shrnutí.\n\nŘešíme 9místné auto pro oddíl a skládáme ho z jednoho silnějšího partnera a několika pravidelných partnerství. Pokud je ve firmě někdo, kdo řeší marketing, společenskou odpovědnost nebo podobné lokální podpory, budu rád za nasměrování.\n\nMůžu vám krátké shrnutí poslat ještě dnes.`,
     usage: [
       "Použít 1 až 2 dny po e-mailu, ne až po týdnu.",
       "Cíl hovoru není prodat všechno po telefonu, ale dostat se ke správné osobě nebo na krátkou schůzku.",
+    ],
+    pipeline: [
+      { order: 1, label: "Zavolat", timing: "Den 1–2 po e-mailu", description: "Zavolat a ověřit, že e-mail dorazil ke správné osobě." },
+      { order: 2, label: "Poslat shrnutí", timing: "Ihned po hovoru", description: "Pokud je zájem, poslat dvoustránkové shrnutí." },
+      { order: 3, label: "Domluvit schůzku", timing: "Do týdne", description: "Navrhnout osobní schůzku nebo videohovor." },
     ],
   },
 ];

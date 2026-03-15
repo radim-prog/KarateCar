@@ -2,7 +2,8 @@
 
 import { useState, type ReactNode } from "react";
 
-import type { Lead } from "../data";
+import type { Lead, LeadStatus } from "../data";
+import { OutreachStateProvider, useOutreachState } from "./outreach-state-provider";
 
 type LeadGroup = {
   id: string;
@@ -14,6 +15,17 @@ type LeadGroup = {
 type LeadTabsProps = {
   groups: LeadGroup[];
 };
+
+const STATUS_CONFIG: Record<LeadStatus, { label: string; color: string; bg: string }> = {
+  ceka: { label: "Čeká", color: "text-[var(--muted)]", bg: "bg-[var(--surface-raised)]" },
+  osloveno: { label: "Osloveno", color: "text-blue-400", bg: "bg-blue-500/10" },
+  odpoved: { label: "Odpověď", color: "text-[var(--accent)]", bg: "bg-[var(--accent-soft)]" },
+  schuzka: { label: "Schůzka", color: "text-[var(--gold)]", bg: "bg-[var(--gold-soft)]" },
+  dohodnuto: { label: "Dohodnuto", color: "text-[var(--green)]", bg: "bg-[var(--green-soft)]" },
+  odmitli: { label: "Odmítli", color: "text-red-400", bg: "bg-red-500/10" },
+};
+
+const STATUS_ORDER: LeadStatus[] = ["ceka", "osloveno", "odpoved", "schuzka", "dohodnuto", "odmitli"];
 
 function linkifyContact(text: string): ReactNode {
   const emailRe = /[\w.+-]+@[\w.-]+\.\w+/g;
@@ -56,7 +68,30 @@ function linkifyContact(text: string): ReactNode {
   return parts.length > 0 ? parts : text;
 }
 
-export function LeadTabs({ groups }: LeadTabsProps) {
+function StatusBadge({ name }: { name: string }) {
+  const { statuses, setLeadStatus } = useOutreachState();
+  const current = statuses[name] ?? "ceka";
+  const config = STATUS_CONFIG[current];
+
+  function cycleStatus() {
+    const currentIndex = STATUS_ORDER.indexOf(current);
+    const nextIndex = (currentIndex + 1) % STATUS_ORDER.length;
+    setLeadStatus(name, STATUS_ORDER[nextIndex]);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={cycleStatus}
+      className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-medium transition ${config.bg} ${config.color} hover:opacity-80`}
+      title="Klikněte pro změnu stavu"
+    >
+      {config.label}
+    </button>
+  );
+}
+
+function LeadTabsInner({ groups }: LeadTabsProps) {
   const [selectedId, setSelectedId] = useState(groups[0]?.id ?? "");
   const active = groups.find((g) => g.id === selectedId) ?? groups[0];
 
@@ -99,18 +134,23 @@ export function LeadTabs({ groups }: LeadTabsProps) {
             className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4"
           >
             <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-              <div>
-                <h3 className="text-base font-semibold">{lead.name}</h3>
-                <span className="text-xs text-[var(--muted)]">{lead.kind}</span>
+              <div className="flex items-center gap-2">
+                <div>
+                  <h3 className="text-base font-semibold">{lead.name}</h3>
+                  <span className="text-xs text-[var(--muted)]">{lead.kind}</span>
+                </div>
               </div>
-              <a
-                href={lead.source.url}
-                target="_blank"
-                rel="noreferrer"
-                className="shrink-0 text-sm font-medium text-[var(--accent)] hover:underline"
-              >
-                {lead.source.label}
-              </a>
+              <div className="flex items-center gap-2">
+                <StatusBadge name={lead.name} />
+                <a
+                  href={lead.source.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="shrink-0 text-sm font-medium text-[var(--accent)] hover:underline"
+                >
+                  {lead.source.label}
+                </a>
+              </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 text-sm">
@@ -137,5 +177,13 @@ export function LeadTabs({ groups }: LeadTabsProps) {
         ))}
       </div>
     </div>
+  );
+}
+
+export function LeadTabs(props: LeadTabsProps) {
+  return (
+    <OutreachStateProvider>
+      <LeadTabsInner {...props} />
+    </OutreachStateProvider>
   );
 }

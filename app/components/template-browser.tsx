@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import type { TemplateBlock } from "../data";
+import { PipelineView } from "./pipeline-view";
 
 type TemplateBrowserProps = {
   templates: TemplateBlock[];
@@ -101,6 +102,11 @@ export function TemplateBrowser({ templates }: TemplateBrowserProps) {
             </ul>
           </div>
         </div>
+
+        {/* Pipeline */}
+        {active.pipeline.length > 0 && (
+          <PipelineView steps={active.pipeline} />
+        )}
       </div>
     </div>
   );

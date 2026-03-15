@@ -1,14 +1,6 @@
-import { actionPhases, institutionTargets, legalNotes, sources } from "../data";
+import { actionPhases, legalNotes, sources } from "../data";
+import { VisualTimeline } from "../components/visual-timeline";
 import { PageCrossLinks } from "../components/page-cross-links";
-
-const groupedTargets = institutionTargets.reduce<Record<string, typeof institutionTargets>>(
-  (acc, target) => {
-    if (!acc[target.lane]) acc[target.lane] = [];
-    acc[target.lane].push(target);
-    return acc;
-  },
-  {},
-);
 
 const sourceCategories = ["Oddíl", "Dotace", "Automobilky", "Právní"] as const;
 
@@ -29,82 +21,15 @@ export default function PodkladyPage() {
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight">Zdroje a podklady</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
-          Časová osa, instituce, daňové poznámky a všechny oficiální odkazy.
+          Vizuální časová osa, daňové poznámky a všechny oficiální odkazy.
           Tuhle stránku otevři, když potřebuješ oporu pro rozhodnutí.
         </p>
       </div>
 
-      {/* Timeline */}
+      {/* Visual Timeline */}
       <section>
         <h2 className="text-lg font-semibold mb-4">Časová osa</h2>
-        <div className="space-y-2">
-          {actionPhases.map((phase, i) => (
-            <div
-              key={phase.title}
-              className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4"
-            >
-              <div className="flex flex-wrap items-start gap-4">
-                <div className="flex items-center gap-3 shrink-0 w-40">
-                  <span className="flex h-7 w-7 items-center justify-center rounded bg-[var(--accent-soft)] text-xs font-bold text-[var(--accent)]">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">{phase.title}</div>
-                    <div className="text-xs text-[var(--muted)]">{phase.window}</div>
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{phase.outcome}</p>
-                  <ul className="mt-2 space-y-1 text-sm text-[var(--muted)]">
-                    {phase.actions.map((action) => (
-                      <li key={action} className="leading-relaxed">
-                        {action}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Institutions */}
-      <section>
-        <h2 className="text-lg font-semibold mb-4">Instituce</h2>
-        <div className="space-y-4">
-          {Object.entries(groupedTargets).map(([lane, targets]) => (
-            <div key={lane}>
-              <h3 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-2">
-                {lane}
-              </h3>
-              <div className="space-y-2">
-                {targets.map((target) => (
-                  <div
-                    key={target.name}
-                    className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4"
-                  >
-                    <div className="text-sm font-semibold">{target.name}</div>
-                    <p className="mt-1 text-sm leading-relaxed">{target.ask}</p>
-                    <p className="mt-1 text-sm text-[var(--muted)] leading-relaxed">
-                      {target.whyNow}
-                    </p>
-                    {target.source && (
-                      <a
-                        href={target.source.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-2 inline-block text-sm font-medium text-[var(--accent)] hover:underline"
-                      >
-                        {target.source.label}
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <VisualTimeline phases={actionPhases} />
       </section>
 
       {/* Legal notes */}
@@ -142,7 +67,7 @@ export default function PodkladyPage() {
       <PageCrossLinks
         links={[
           { href: "/", label: "Zpět na strategii" },
-          { href: "/kalkulacka", label: "Kalkulačka" },
+          { href: "/kalkulacka", label: "Náklady" },
           { href: "/outreach", label: "Kontakty" },
         ]}
       />

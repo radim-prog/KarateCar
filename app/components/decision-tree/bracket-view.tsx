@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import type { DecisionNode } from "../../data";
 import { decisionNodes } from "../../data";
 import { useTreeState } from "../tree-state-provider";
 

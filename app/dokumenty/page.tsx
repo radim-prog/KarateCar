@@ -12,7 +12,7 @@ export default function DokumentyPage() {
         <h1 className="text-3xl font-extrabold tracking-tight">Šablony</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
           Vyber šablonu, zkopíruj text a uprav jen jméno, roli a kontakty.
-          Jsou tu i follow-up skripty pro telefon.
+          Jsou tu i skripty pro navázání a vizuální postup po odeslání.
         </p>
       </div>
 

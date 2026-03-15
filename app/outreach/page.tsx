@@ -1,4 +1,4 @@
-import { automotiveLeads, localCompanyLeads, warmIntroLeads } from "../data";
+import { automotiveLeads, localCompanyLeads, communityLeads } from "../data";
 import { LeadTabs } from "../components/lead-tabs";
 import { PageCrossLinks } from "../components/page-cross-links";
 
@@ -16,10 +16,10 @@ const leadGroups = [
     leads: localCompanyLeads,
   },
   {
-    id: "warm",
-    label: "Teplé kontakty",
-    summary: "Kontakty přes oddíl, rodiče nebo stávající partnery. Osobní přístup, ne studený e-mail.",
-    leads: warmIntroLeads,
+    id: "community",
+    label: "Rodiče a oddíl",
+    summary: "Osobní oslovení rodičů, členů a stávajících partnerů oddílu.",
+    leads: communityLeads,
   },
 ];
 
@@ -32,8 +32,8 @@ export default function OutreachPage() {
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight">Koho oslovit</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
-          Automobilky pro auto, lokální firmy pro měsíční příjem, teplé
-          kontakty pro rychlé propojení. Ke každému je přímý kontakt.
+          Automobilky pro auto, lokální firmy pro měsíční příjem, rodiče a oddíl
+          pro osobní propojení. Ke každému je přímý kontakt a sledování stavu.
         </p>
       </div>
 

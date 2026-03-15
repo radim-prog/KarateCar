@@ -19,19 +19,19 @@ const planSteps = [
   {
     number: 3,
     label: "Kontakty",
-    description: "Oslovte automobilky, firmy a teplé kontakty.",
+    description: "Oslovte automobilky, firmy, rodiče a partnery oddílu.",
     href: "/outreach",
   },
   {
     number: 4,
     label: "Šablony",
-    description: "Vezměte hotové e-maily a skripty pro jednání.",
+    description: "Hotové e-maily, skripty pro navázání a postup po odeslání.",
     href: "/dokumenty",
   },
   {
     number: 5,
     label: "Podklady",
-    description: "Časová osa, instituce, daně a zdroje na jednom místě.",
+    description: "Vizuální časová osa, daně a všechny zdroje na jednom místě.",
     href: "/podklady",
   },
 ];
