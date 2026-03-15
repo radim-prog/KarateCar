@@ -34,7 +34,7 @@ export function VehicleSelector({
               className={`text-left rounded-xl border-2 p-4 transition ${
                 active
                   ? "border-[var(--accent)] bg-[var(--accent-soft)]"
-                  : "border-[var(--line)] bg-white hover:border-[var(--accent)]/50"
+                  : "border-[var(--line)] bg-[var(--surface)] hover:border-[var(--accent)]/50"
               }`}
             >
               <div className="flex items-center justify-between mb-1">

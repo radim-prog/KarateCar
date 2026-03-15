@@ -16,7 +16,7 @@ export function PageCrossLinks({ links }: PageCrossLinksProps) {
         <Link
           key={link.href}
           href={link.href}
-          className="rounded-lg border border-[var(--line)] bg-white px-4 py-2 text-sm font-medium hover:border-[var(--accent)] hover:text-[var(--accent)] transition"
+          className="rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-sm font-medium hover:border-[var(--accent)] hover:text-[var(--accent)] transition"
         >
           {link.label}
         </Link>

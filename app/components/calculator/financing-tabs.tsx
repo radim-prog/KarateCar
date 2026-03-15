@@ -32,7 +32,7 @@ export function FinancingTabs({ vehicle, activeTab, onTabChange }: FinancingTabs
   ];
 
   return (
-    <div className="rounded-xl border border-[var(--line)] bg-white p-5">
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5">
       <h2 className="text-lg font-semibold mb-4">Financování</h2>
 
       {/* Tab bar */}

@@ -24,7 +24,10 @@ export default function PodkladyPage() {
   return (
     <div className="space-y-8 max-w-4xl">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Zdroje a podklady</h1>
+        <div className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] mb-2">
+          Reference a podpora
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight">Zdroje a podklady</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
           Časová osa, instituce, daňové poznámky a všechny oficiální odkazy.
           Tuhle stránku otevři, když potřebuješ oporu pro rozhodnutí.
@@ -38,7 +41,7 @@ export default function PodkladyPage() {
           {actionPhases.map((phase, i) => (
             <div
               key={phase.title}
-              className="rounded-xl border border-[var(--line)] bg-white p-4"
+              className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4"
             >
               <div className="flex flex-wrap items-start gap-4">
                 <div className="flex items-center gap-3 shrink-0 w-40">
@@ -79,7 +82,7 @@ export default function PodkladyPage() {
                 {targets.map((target) => (
                   <div
                     key={target.name}
-                    className="rounded-xl border border-[var(--line)] bg-white p-4"
+                    className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4"
                   >
                     <div className="text-sm font-semibold">{target.name}</div>
                     <p className="mt-1 text-sm leading-relaxed">{target.ask}</p>
@@ -111,10 +114,10 @@ export default function PodkladyPage() {
           {legalNotes.map((note) => (
             <div
               key={note.title}
-              className="rounded-xl border border-[var(--line)] border-l-4 border-l-amber-400 bg-white p-4"
+              className="rounded-xl border border-[var(--line)] border-l-4 border-l-amber-400 bg-[var(--surface)] p-4"
             >
               <div className="text-sm font-semibold">{note.title}</div>
-              <div className="mt-1.5 rounded-md bg-amber-50 px-3 py-1.5 text-sm font-medium text-amber-800">
+              <div className="mt-1.5 rounded-md bg-[var(--gold-soft)] px-3 py-1.5 text-sm font-medium text-[var(--gold)]">
                 {note.keyRule}
               </div>
               {/* Safe: content is hardcoded in data.ts, not user input */}
@@ -156,7 +159,7 @@ export default function PodkladyPage() {
                 <h3 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-2">
                   {cat}
                 </h3>
-                <div className="rounded-xl border border-[var(--line)] bg-white divide-y divide-[var(--line)]">
+                <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] divide-y divide-[var(--line)]">
                   {catSources.map((source) => (
                     <div key={source.url} className="px-4 py-3">
                       <a

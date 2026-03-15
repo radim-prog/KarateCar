@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "./components/app-shell";
 
-const sans = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin-ext"],
 });
 
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="cs">
-      <body className={sans.variable}>
+      <body className={outfit.variable}>
         <AppShell>{children}</AppShell>
       </body>
     </html>

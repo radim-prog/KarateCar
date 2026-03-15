@@ -15,7 +15,7 @@ export function MonthlyBalance({
   const diff = monthlyFunding - totalMonthly;
 
   return (
-    <div className="rounded-xl border-2 border-[var(--line)] bg-white p-5">
+    <div className="rounded-xl border-2 border-[var(--line)] bg-[var(--surface)] p-5">
       <h2 className="text-lg font-semibold mb-4">Měsíční bilance</h2>
 
       <div className="space-y-2">

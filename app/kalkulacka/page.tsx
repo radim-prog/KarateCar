@@ -71,12 +71,14 @@ function Calculator() {
   return (
     <div className="space-y-8 max-w-4xl">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Kalkulačka</h1>
+        <div className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] mb-2">
+          Financování a náklady
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight">Kalkulačka</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
           Vyberte vůz, zvolte typ financování a uvidíte reálné měsíční náklady.
-          Zdroje financování se napojují na rozhodovací strom z hlavní stránky —
-          čím víc strategií označíte jako ANO, tím víc zdrojů se promítne do
-          bilance.
+          Zdroje se napojují na rozhodovací strom — čím víc strategií označíte,
+          tím víc zdrojů se promítne do bilance.
         </p>
       </div>
 

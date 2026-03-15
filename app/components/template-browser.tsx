@@ -40,7 +40,7 @@ export function TemplateBrowser({ templates }: TemplateBrowserProps) {
               className={`shrink-0 rounded-lg px-4 py-2 text-sm font-medium transition ${
                 isActive
                   ? "bg-[var(--accent)] text-white"
-                  : "border border-[var(--line)] bg-white text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  : "border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
               }`}
             >
               {t.label}
@@ -50,7 +50,7 @@ export function TemplateBrowser({ templates }: TemplateBrowserProps) {
       </div>
 
       {/* Template content */}
-      <div className="rounded-xl border border-[var(--line)] bg-white p-5 md:p-6">
+      <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 md:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
           <div>
             <h2 className="text-xl font-semibold">{active.summary}</h2>
@@ -66,7 +66,7 @@ export function TemplateBrowser({ templates }: TemplateBrowserProps) {
               <button
                 type="button"
                 onClick={() => handleCopy(`${active.id}-subject`, active.subject ?? "")}
-                className="rounded-lg border border-[var(--line)] bg-white px-3 py-1.5 text-sm font-medium hover:border-[var(--accent)] transition"
+                className="rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-1.5 text-sm font-medium hover:border-[var(--accent)] transition"
               >
                 {copied === `${active.id}-subject` ? "Zkopírováno!" : "Kopírovat předmět"}
               </button>
@@ -84,7 +84,7 @@ export function TemplateBrowser({ templates }: TemplateBrowserProps) {
         <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
           {/* Body */}
           <div className="rounded-lg bg-[var(--background)] p-4">
-            <pre className="whitespace-pre-wrap text-sm leading-7 text-[var(--foreground)] font-[family-name:var(--font-space-grotesk)]">
+            <pre className="whitespace-pre-wrap text-sm leading-7 text-[var(--foreground)] font-[family-name:var(--font-outfit)]">
               {active.body}
             </pre>
           </div>

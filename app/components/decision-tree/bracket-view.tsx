@@ -193,16 +193,16 @@ export function BracketView() {
 
           {/* Meta */}
           <div className="flex flex-wrap gap-2 mt-3 text-xs">
-            <span className="rounded-md bg-[var(--background)] px-2.5 py-1 font-medium">
+            <span className="rounded-md bg-[var(--surface-raised)] px-2.5 py-1 font-medium">
               {selectedNode.estimatedTimeframe}
             </span>
-            <span className="rounded-md bg-[var(--background)] px-2.5 py-1 font-medium">
+            <span className="rounded-md bg-[var(--surface-raised)] px-2.5 py-1 font-medium">
               {selectedNode.estimatedValue}
             </span>
-            <span className="rounded-md bg-[var(--background)] px-2.5 py-1">
+            <span className="rounded-md bg-[var(--surface-raised)] px-2.5 py-1">
               Obtížnost: {diffLabel[selectedNode.difficulty]}
             </span>
-            <span className="rounded-md bg-[var(--background)] px-2.5 py-1">
+            <span className="rounded-md bg-[var(--surface-raised)] px-2.5 py-1">
               Šance: {probLabel[selectedNode.probability]}
             </span>
           </div>
@@ -245,7 +245,7 @@ export function BracketView() {
                 state.outcomes[selectedNode.id] === "ano"
                   ? "bg-[var(--green-soft)] border border-[var(--green)]/20"
                   : state.outcomes[selectedNode.id] === "ne"
-                    ? "bg-gray-50 border border-gray-200"
+                    ? "bg-[var(--surface)] border border-[var(--line-strong)]"
                     : "bg-[var(--gold-soft)] border border-[var(--gold)]/20"
               }`}
             >
@@ -355,7 +355,7 @@ function ActionBtn({
   };
   const styles = {
     ano: `${base} bg-[var(--green)] hover:bg-[var(--green)]/90 text-white`,
-    ne: `${base} bg-gray-400 hover:bg-gray-500 text-white`,
+    ne: `${base} bg-[#4a4d5a] hover:bg-[#5a5d6a] text-[var(--foreground)]`,
     podminka: `${base} bg-[var(--gold)] hover:bg-[var(--gold)]/90 text-white`,
   };
   return (

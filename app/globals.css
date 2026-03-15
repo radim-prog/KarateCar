@@ -1,28 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --surface: #ffffff;
-  --foreground: #1c1917;
-  --muted: #78716c;
-  --line: #e7e5e4;
-  --accent: #c2410c;
-  --accent-hover: #9a3412;
-  --accent-soft: rgba(194, 65, 12, 0.08);
-  --green: #15803d;
-  --green-soft: rgba(21, 128, 61, 0.1);
-  --gold: #a16207;
-  --gold-soft: rgba(161, 98, 7, 0.1);
-  --blue: #1d4ed8;
-  --blue-soft: rgba(29, 78, 216, 0.1);
-  --purple: #7c3aed;
-  --purple-soft: rgba(124, 58, 237, 0.1);
+  --bg-deep: #08090d;
+  --background: #0e1019;
+  --surface: #171a25;
+  --surface-hover: #1d2030;
+  --surface-raised: #222538;
+  --foreground: #e4e6ed;
+  --muted: #7d8294;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.12);
+  --accent: #e8a52e;
+  --accent-hover: #f0b840;
+  --accent-soft: rgba(232, 165, 46, 0.1);
+  --accent-glow: rgba(232, 165, 46, 0.06);
+  --green: #34d399;
+  --green-soft: rgba(52, 211, 153, 0.1);
+  --gold: #fbbf24;
+  --gold-soft: rgba(251, 191, 36, 0.08);
+  --blue: #60a5fa;
+  --blue-soft: rgba(96, 165, 250, 0.1);
+  --purple: #a78bfa;
+  --purple-soft: rgba(167, 139, 250, 0.1);
+  --red: #f87171;
+  --red-soft: rgba(248, 113, 113, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-grotesk);
+  --font-sans: var(--font-outfit);
 }
 
 * {
@@ -38,12 +45,13 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: rgba(194, 65, 12, 0.15);
+  background: rgba(232, 165, 46, 0.25);
+  color: #fff;
 }
 
 a {
@@ -56,6 +64,18 @@ a {
   border-radius: 4px;
 }
 
+/* ── Subtle background texture ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232, 165, 46, 0.03) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(52, 211, 153, 0.02) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* ── Bracket / Pavouk ── */
 
 .bracket {
@@ -65,6 +85,20 @@ a {
   padding: 0.5rem 0 1rem;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.bracket::-webkit-scrollbar {
+  height: 6px;
+}
+
+.bracket::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bracket::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
 }
 
 .bracket-stage {
@@ -72,8 +106,6 @@ a {
   align-items: stretch;
   flex-shrink: 0;
 }
-
-/* Column */
 
 .bracket-column {
   display: flex;
@@ -84,8 +116,8 @@ a {
 }
 
 .bracket-column.inactive {
-  opacity: 0.25;
-  filter: grayscale(0.6);
+  opacity: 0.2;
+  filter: grayscale(0.5);
   pointer-events: none;
 }
 
@@ -94,10 +126,8 @@ a {
   filter: none;
 }
 
-/* Column header */
-
 .bracket-col-head {
-  border-top: 3px solid var(--tier-color, var(--line));
+  border-top: 3px solid var(--tier-color, var(--line-strong));
   padding: 0.6rem 0.25rem 0.5rem;
   margin-bottom: 0.4rem;
   position: relative;
@@ -133,8 +163,6 @@ a {
   border-radius: 0.25rem;
 }
 
-/* Node cards */
-
 .bracket-cards {
   display: flex;
   flex-direction: column;
@@ -149,23 +177,23 @@ a {
   flex-direction: column;
   gap: 0.15rem;
   padding: 0.65rem 0.7rem;
-  border: 2px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 0.65rem;
-  background: white;
+  background: var(--surface);
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .bracket-card:hover {
   border-color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--accent-soft);
 }
 
 .bracket-card.selected {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft), 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .bracket-card.ano {
@@ -175,12 +203,13 @@ a {
 
 .bracket-card.ano:hover {
   border-color: var(--green);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.15);
 }
 
 .bracket-card.ne {
-  border-color: #d4d4d4;
-  background: #fafafa;
-  opacity: 0.35;
+  border-color: var(--line);
+  background: var(--surface);
+  opacity: 0.3;
 }
 
 .bracket-card.ne .bracket-card-name {
@@ -195,6 +224,7 @@ a {
 
 .bracket-card.podminka:hover {
   border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.12);
 }
 
 .bracket-card-row {
@@ -212,14 +242,16 @@ a {
 
 .bracket-card-dot.ano {
   background: var(--green);
+  box-shadow: 0 0 6px var(--green);
 }
 
 .bracket-card-dot.ne {
-  background: #9ca3af;
+  background: #4a4d5a;
 }
 
 .bracket-card-dot.podminka {
   background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
 }
 
 .bracket-card-name {
@@ -239,7 +271,7 @@ a {
   color: var(--muted);
 }
 
-/* ── Bracket connector (bracket-arm style) ── */
+/* ── Bracket connector ── */
 
 .bracket-connector {
   display: flex;
@@ -249,18 +281,16 @@ a {
   transition: opacity 0.4s ease;
 }
 
-/* Merge bracket ] (left side — gathers from prev column) */
 .bracket-arm-merge {
   width: 10px;
-  border-right: 2px solid var(--line);
-  border-top: 2px solid var(--line);
-  border-bottom: 2px solid var(--line);
+  border-right: 2px solid var(--line-strong);
+  border-top: 2px solid var(--line-strong);
+  border-bottom: 2px solid var(--line-strong);
   border-radius: 0 5px 5px 0;
   margin: 18% 0;
   transition: border-color 0.4s ease;
 }
 
-/* Horizontal bridge (middle) */
 .bracket-arm-bridge {
   flex: 1;
   display: flex;
@@ -276,7 +306,7 @@ a {
   right: 0;
   top: 50%;
   height: 2px;
-  background: var(--line);
+  background: var(--line-strong);
   transition: background 0.4s ease;
 }
 
@@ -293,12 +323,11 @@ a {
   transition: color 0.4s ease;
 }
 
-/* Split bracket [ (right side — distributes to next column) */
 .bracket-arm-split {
   width: 10px;
-  border-left: 2px solid var(--line);
-  border-top: 2px solid var(--line);
-  border-bottom: 2px solid var(--line);
+  border-left: 2px solid var(--line-strong);
+  border-top: 2px solid var(--line-strong);
+  border-bottom: 2px solid var(--line-strong);
   border-radius: 5px 0 0 5px;
   margin: 18% 0;
   transition: border-color 0.4s ease;
@@ -321,10 +350,10 @@ a {
 /* Detail panel */
 
 .bracket-detail {
-  border: 2px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-top: 3px solid var(--accent);
   border-radius: 1rem;
-  background: white;
+  background: var(--surface);
   padding: 1.25rem 1.5rem;
   animation: bracketSlideIn 0.25s ease;
 }
@@ -359,7 +388,7 @@ a {
   font-size: 0.75rem;
   font-weight: 500;
   min-height: 44px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   background: transparent;
   color: var(--muted);
   cursor: pointer;
@@ -410,10 +439,9 @@ a {
     height: 10px;
     flex: 0 0 10px;
     margin: 0 18%;
-    border-right: none;
-    border-bottom: 2px solid var(--line);
-    border-left: 2px solid var(--line);
-    border-right: 2px solid var(--line);
+    border-right: 2px solid var(--line-strong);
+    border-bottom: 2px solid var(--line-strong);
+    border-left: 2px solid var(--line-strong);
     border-top: none;
     border-radius: 0 0 5px 5px;
   }
@@ -436,9 +464,9 @@ a {
     height: 10px;
     flex: 0 0 10px;
     margin: 0 18%;
-    border-left: 2px solid var(--line);
-    border-right: 2px solid var(--line);
-    border-top: 2px solid var(--line);
+    border-left: 2px solid var(--line-strong);
+    border-right: 2px solid var(--line-strong);
+    border-top: 2px solid var(--line-strong);
     border-bottom: none;
     border-radius: 5px 5px 0 0;
   }

@@ -32,7 +32,7 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
 
   if (activeSources.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-[var(--line)] bg-white p-5 text-center">
+      <div className="rounded-xl border border-dashed border-[var(--line)] bg-[var(--surface)] p-5 text-center">
         <h2 className="text-lg font-semibold mb-2">Odkud peníze?</h2>
         <p className="text-sm text-[var(--muted)]">
           Vraťte se na hlavní stránku a označte strategie jako ANO nebo
@@ -44,7 +44,7 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
   }
 
   return (
-    <div className="rounded-xl border border-[var(--line)] bg-white p-5">
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5">
       <h2 className="text-lg font-semibold mb-4">Odkud peníze?</h2>
 
       {/* Sources list */}

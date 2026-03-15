@@ -27,7 +27,10 @@ export default function OutreachPage() {
   return (
     <div className="space-y-8 max-w-4xl">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Koho oslovit</h1>
+        <div className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] mb-2">
+          Oslovení partnerů
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight">Koho oslovit</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
           Automobilky pro auto, lokální firmy pro měsíční příjem, teplé
           kontakty pro rychlé propojení. Ke každému je přímý kontakt.

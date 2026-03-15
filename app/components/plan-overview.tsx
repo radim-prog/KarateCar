@@ -41,30 +41,34 @@ export function PlanOverview() {
 
   return (
     <section>
-      <h2 className="text-lg font-semibold mb-4">Plán krok za krokem</h2>
-      <div className="grid gap-2 sm:grid-cols-5">
+      <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--muted)] mb-4">
+        Plán krok za krokem
+      </h2>
+      <div className="grid gap-3 sm:grid-cols-5">
         {planSteps.map((step) => {
           const active = pathname === step.href;
           return (
             <Link
               key={step.href}
               href={step.href}
-              className={`rounded-xl border-2 p-4 transition block ${
+              className={`group relative rounded-xl border p-4 transition-all block ${
                 active
-                  ? "border-[var(--accent)] bg-[var(--accent-soft)]"
-                  : "border-[var(--line)] bg-white hover:border-[var(--accent)]/50"
+                  ? "border-[var(--accent)] bg-[var(--accent-glow)]"
+                  : "border-[var(--line)] bg-[var(--surface)] hover:border-[var(--line-strong)] hover:bg-[var(--surface-hover)]"
               }`}
             >
               <div
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold mb-2 ${
+                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold mb-2.5 ${
                   active
-                    ? "bg-[var(--accent)] text-white"
-                    : "bg-[var(--line)] text-[var(--muted)]"
+                    ? "bg-[var(--accent)] text-[var(--background)]"
+                    : "bg-[var(--surface-raised)] text-[var(--muted)] group-hover:text-[var(--foreground)]"
                 }`}
               >
                 {step.number}
               </div>
-              <div className="text-sm font-semibold">{step.label}</div>
+              <div className={`text-sm font-semibold ${active ? "text-[var(--accent)]" : ""}`}>
+                {step.label}
+              </div>
               <p className="mt-1 text-xs text-[var(--muted)] leading-relaxed">
                 {step.description}
               </p>

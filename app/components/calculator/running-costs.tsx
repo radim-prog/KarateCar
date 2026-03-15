@@ -28,7 +28,7 @@ export function RunningCosts({ vehicle, financingType, onTotalChange }: RunningC
   }
 
   return (
-    <div className="rounded-xl border border-[var(--line)] bg-white p-5">
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5">
       <h2 className="text-lg font-semibold mb-4">
         Měsíční provozní náklady
       </h2>

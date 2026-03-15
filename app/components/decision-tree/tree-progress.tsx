@@ -21,7 +21,7 @@ export function TreeProgress() {
   const pct = total > 0 ? Math.round((explored / total) * 100) : 0;
 
   return (
-    <div className="rounded-xl border border-[var(--line)] bg-white p-4">
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-sm font-semibold">Postup průzkumu</h2>
         <span className="text-sm font-bold text-[var(--accent)]">
@@ -45,7 +45,7 @@ export function TreeProgress() {
         )}
         {neCount > 0 && (
           <div
-            className="h-full bg-gray-300 transition-all"
+            className="h-full bg-[#4a4d5a] transition-all"
             style={{ width: `${(neCount / total) * 100}%` }}
           />
         )}
@@ -67,7 +67,7 @@ export function TreeProgress() {
         )}
         {neCount > 0 && (
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-gray-300" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#4a4d5a]" />
             NE: {neCount}
           </span>
         )}

@@ -22,7 +22,7 @@ export function TreeSummary() {
 
   if (!hasAnyOutcome) {
     return (
-      <div className="rounded-xl border border-dashed border-[var(--line)] bg-white p-5 text-center">
+      <div className="rounded-xl border border-dashed border-[var(--line)] bg-[var(--surface)] p-5 text-center">
         <p className="text-sm text-[var(--muted)]">
           Začněte klikáním na karty výše a volbou ANO / NE / PODMÍNKA. Tento
           panel ukáže doporučené další kroky.
@@ -32,7 +32,7 @@ export function TreeSummary() {
   }
 
   return (
-    <div className="rounded-xl border border-[var(--line)] bg-white p-5 space-y-4">
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Doporučené další kroky</h2>
         <button
