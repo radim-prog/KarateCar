@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-:root {
+/* ── Dark theme (default) ── */
+:root,
+[data-theme="dark"] {
   --bg-deep: #08090d;
   --background: #0e1019;
   --surface: #171a25;
@@ -24,6 +26,33 @@
   --purple-soft: rgba(167, 139, 250, 0.1);
   --red: #f87171;
   --red-soft: rgba(248, 113, 113, 0.1);
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg-deep: #f0ece4;
+  --background: #f7f4ef;
+  --surface: #ffffff;
+  --surface-hover: #f5f2ec;
+  --surface-raised: #ede9e1;
+  --foreground: #1c1e28;
+  --muted: #6b6e7a;
+  --line: rgba(0, 0, 0, 0.08);
+  --line-strong: rgba(0, 0, 0, 0.14);
+  --accent: #c48a14;
+  --accent-hover: #a8750e;
+  --accent-soft: rgba(196, 138, 20, 0.08);
+  --accent-glow: rgba(196, 138, 20, 0.04);
+  --green: #16a34a;
+  --green-soft: rgba(22, 163, 74, 0.08);
+  --gold: #b45309;
+  --gold-soft: rgba(180, 83, 9, 0.06);
+  --blue: #2563eb;
+  --blue-soft: rgba(37, 99, 235, 0.06);
+  --purple: #7c3aed;
+  --purple-soft: rgba(124, 58, 237, 0.06);
+  --red: #dc2626;
+  --red-soft: rgba(220, 38, 38, 0.06);
 }
 
 @theme inline {
@@ -50,8 +79,8 @@ body {
 }
 
 ::selection {
-  background: rgba(232, 165, 46, 0.25);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--foreground);
 }
 
 a {
@@ -246,7 +275,7 @@ body::before {
 }
 
 .bracket-card-dot.ne {
-  background: #4a4d5a;
+  background: var(--muted);
 }
 
 .bracket-card-dot.podminka {

@@ -64,7 +64,7 @@ export function JourneyProgress({ phases, nodesById }: JourneyProgressProps) {
           )}
           {neCount > 0 && (
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#4a4d5a]" />
+              <span className="w-2 h-2 rounded-full bg-[var(--surface-raised)]" />
               Ne: {neCount}
             </span>
           )}

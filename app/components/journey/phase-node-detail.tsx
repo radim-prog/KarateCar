@@ -129,7 +129,7 @@ function ActionBtn({ label, active, onClick, variant }: {
   const ringColors = { ano: "ring-[var(--green)]", ne: "ring-gray-400", podminka: "ring-[var(--gold)]" };
   const styles = {
     ano: "bracket-action-btn bg-[var(--green)] hover:bg-[var(--green)]/90 text-white",
-    ne: "bracket-action-btn bg-[#4a4d5a] hover:bg-[#5a5d6a] text-[var(--foreground)]",
+    ne: "bracket-action-btn bg-[var(--surface-raised)] hover:bg-[var(--muted)] text-[var(--foreground)]",
     podminka: "bracket-action-btn bg-[var(--gold)] hover:bg-[var(--gold)]/90 text-white",
   };
   return (
