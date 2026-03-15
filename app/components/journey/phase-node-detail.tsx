@@ -85,25 +85,54 @@ export function PhaseNodeDetail({ node }: { node: DecisionNode }) {
         </div>
       )}
 
-      {/* Další postup */}
-      {outcome !== "pending" && (
+      {/* Co se stane — vždy viditelné */}
+      <div className="mt-5 space-y-2">
+        <h4 className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] mb-2">
+          Co se stane dál
+        </h4>
         <div
-          className={`rounded-lg p-4 mt-4 ${
+          className={`rounded-lg px-4 py-3 border text-sm leading-relaxed cursor-pointer transition ${
             outcome === "ano"
-              ? "bg-[var(--green-soft)] border border-[var(--green)]/20"
-              : outcome === "ne"
-                ? "bg-[var(--surface)] border border-[var(--line-strong)]"
-                : "bg-[var(--gold-soft)] border border-[var(--gold)]/20"
+              ? "bg-[var(--green-soft)] border-[var(--green)]/30 ring-2 ring-[var(--green)]/30"
+              : "bg-[var(--green-soft)]/40 border-[var(--line)] hover:border-[var(--green)]/30"
           }`}
+          onClick={() => setOutcome(node.id, "ano")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setOutcome(node.id, "ano")}
         >
-          <h4 className="text-xs font-bold uppercase tracking-wide mb-1">Další postup</h4>
-          <p className="text-sm leading-relaxed">
-            {outcome === "ano" && node.nextMoveOnAno}
-            {outcome === "ne" && node.nextMoveOnNe}
-            {outcome === "podminka" && node.nextMoveOnPodminka}
-          </p>
+          <span className="text-xs font-bold text-[var(--green)] uppercase">Vyjde to →</span>{" "}
+          {node.nextMoveOnAno}
         </div>
-      )}
+        <div
+          className={`rounded-lg px-4 py-3 border text-sm leading-relaxed cursor-pointer transition ${
+            outcome === "ne"
+              ? "bg-[var(--surface-raised)] border-[var(--line-strong)] ring-2 ring-[var(--muted)]/30"
+              : "bg-[var(--surface)] border-[var(--line)] hover:border-[var(--line-strong)]"
+          }`}
+          onClick={() => setOutcome(node.id, "ne")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setOutcome(node.id, "ne")}
+        >
+          <span className="text-xs font-bold text-[var(--muted)] uppercase">Nevyjde →</span>{" "}
+          {node.nextMoveOnNe}
+        </div>
+        <div
+          className={`rounded-lg px-4 py-3 border text-sm leading-relaxed cursor-pointer transition ${
+            outcome === "podminka"
+              ? "bg-[var(--gold-soft)] border-[var(--gold)]/30 ring-2 ring-[var(--gold)]/30"
+              : "bg-[var(--gold-soft)]/40 border-[var(--line)] hover:border-[var(--gold)]/30"
+          }`}
+          onClick={() => setOutcome(node.id, "podminka")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setOutcome(node.id, "podminka")}
+        >
+          <span className="text-xs font-bold text-[var(--gold)] uppercase">S podmínkou →</span>{" "}
+          {node.nextMoveOnPodminka}
+        </div>
+      </div>
 
       {/* Poznámka */}
       <NoteField
@@ -111,17 +140,14 @@ export function PhaseNodeDetail({ node }: { node: DecisionNode }) {
         onChange={(v) => setNote(node.id, v)}
       />
 
-      {/* Akce */}
-      <div className="flex flex-wrap gap-2 mt-4">
-        <ActionBtn label="ANO" active={outcome === "ano"} onClick={() => setOutcome(node.id, "ano")} variant="ano" />
-        <ActionBtn label="NE" active={outcome === "ne"} onClick={() => setOutcome(node.id, "ne")} variant="ne" />
-        <ActionBtn label="PODMÍNKA" active={outcome === "podminka"} onClick={() => setOutcome(node.id, "podminka")} variant="podminka" />
-        {outcome !== "pending" && (
-          <button type="button" onClick={() => resetNode(node.id)} className="bracket-btn-ghost">
-            Resetovat
+      {/* Reset */}
+      {outcome !== "pending" && (
+        <div className="mt-3">
+          <button type="button" onClick={() => resetNode(node.id)} className="bracket-btn-ghost text-xs">
+            Resetovat volbu
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
