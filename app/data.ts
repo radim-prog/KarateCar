@@ -332,8 +332,8 @@ export const legalNotes: LegalNote[] = [
   },
   {
     title: "Pro firmy bývá praktičtější sponzoring/reklama",
-    keyRule: "Logo a zmínky = reklamní smlouva, ne dar. Ověřit s účetním.",
-    text: "Pokud firma chce protiplnění typu logo, zmínky nebo prezentaci značky, je zpravidla čistší uzavřít <strong>reklamní nebo sponzorskou smlouvu</strong> místo daru. Pro opakovanou měsíční podporu je to často účetně i obchodně přirozenější. Konkrétní nastavení má ověřit účetní klubu i partnera.",
+    keyRule: "Logo a zmínky = reklamní smlouva, ne dar. Ověřit nastavení s účetním partnera.",
+    text: "Pokud firma chce protiplnění typu logo, zmínky nebo prezentaci značky, je zpravidla čistší uzavřít <strong>reklamní nebo sponzorskou smlouvu</strong> místo daru. Pro opakovanou měsíční podporu je to často účetně i obchodně přirozenější. Ze strany klubu to máme pod kontrolou — ověřit nastavení s účetním na straně partnera.",
     source: sources[14],
   },
   {
