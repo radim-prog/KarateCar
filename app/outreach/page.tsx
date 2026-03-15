@@ -1,5 +1,6 @@
 import { automotiveLeads, localCompanyLeads, warmIntroLeads } from "../data";
 import { LeadTabs } from "../components/lead-tabs";
+import { PageCrossLinks } from "../components/page-cross-links";
 
 const leadGroups = [
   {
@@ -34,6 +35,13 @@ export default function OutreachPage() {
       </div>
 
       <LeadTabs groups={leadGroups} />
+
+      <PageCrossLinks
+        links={[
+          { href: "/dokumenty", label: "Hotové šablony" },
+          { href: "/", label: "Zpět na strategii" },
+        ]}
+      />
     </div>
   );
 }

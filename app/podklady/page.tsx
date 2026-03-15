@@ -1,4 +1,5 @@
 import { actionPhases, institutionTargets, legalNotes, sources } from "../data";
+import { PageCrossLinks } from "../components/page-cross-links";
 
 const groupedTargets = institutionTargets.reduce<Record<string, typeof institutionTargets>>(
   (acc, target) => {
@@ -133,6 +134,15 @@ export default function PodkladyPage() {
           ))}
         </div>
       </section>
+
+      {/* Cross links */}
+      <PageCrossLinks
+        links={[
+          { href: "/", label: "Zpět na strategii" },
+          { href: "/kalkulacka", label: "Kalkulačka" },
+          { href: "/outreach", label: "Kontakty" },
+        ]}
+      />
 
       {/* Sources - grouped by category */}
       <section>

@@ -33,7 +33,13 @@ export function AppShell({ children }: AppShellProps) {
             <p className="mt-1.5 text-sm font-semibold text-[var(--foreground)]">
               9místné auto do 3-6 měsíců
             </p>
-            <p className="mt-2 text-xs text-[var(--muted)]">
+            <a
+              href="/podklady"
+              className="mt-2 block text-xs font-medium text-[var(--accent)] hover:underline"
+            >
+              Časová osa projektu
+            </a>
+            <p className="mt-1 text-xs text-[var(--muted)]">
               Aktualizováno {updatedAt}
             </p>
           </div>

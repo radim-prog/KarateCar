@@ -1,5 +1,6 @@
 import { documentTemplates } from "../data";
 import { TemplateBrowser } from "../components/template-browser";
+import { PageCrossLinks } from "../components/page-cross-links";
 
 export default function DokumentyPage() {
   return (
@@ -13,6 +14,13 @@ export default function DokumentyPage() {
       </div>
 
       <TemplateBrowser templates={documentTemplates} />
+
+      <PageCrossLinks
+        links={[
+          { href: "/outreach", label: "Kontakty a oslovení" },
+          { href: "/", label: "Zpět na strategii" },
+        ]}
+      />
     </div>
   );
 }

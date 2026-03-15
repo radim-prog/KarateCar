@@ -1,14 +1,7 @@
 "use client";
 
 import type { VehicleOption } from "../../data";
-
-function fmt(value: number) {
-  return new Intl.NumberFormat("cs-CZ", {
-    style: "currency",
-    currency: "CZK",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
+import { fmt } from "../../lib/format";
 
 type VehicleSelectorProps = {
   vehicles: VehicleOption[];

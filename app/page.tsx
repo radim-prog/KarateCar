@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 
-import { checklistGroups } from "./data";
-import { ProgressChecklist } from "./components/progress-checklist";
 import { TreeStateProvider } from "./components/tree-state-provider";
 import { BracketView } from "./components/decision-tree/bracket-view";
 import { TreeProgress } from "./components/decision-tree/tree-progress";
 import { TreeSummary } from "./components/decision-tree/tree-summary";
+import { PlanOverview } from "./components/plan-overview";
 
 function SpiderPage() {
   return (
@@ -53,10 +52,16 @@ function SpiderPage() {
         >
           Hotové šablony
         </Link>
+        <Link
+          href="/podklady"
+          className="rounded-lg border border-[var(--line)] bg-white px-4 py-2.5 text-sm font-semibold hover:border-[var(--accent)] transition"
+        >
+          Zdroje a podklady
+        </Link>
       </div>
 
-      {/* Checklist */}
-      <ProgressChecklist groups={checklistGroups} />
+      {/* Plan overview */}
+      <PlanOverview />
     </div>
   );
 }

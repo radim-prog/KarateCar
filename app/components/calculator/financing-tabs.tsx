@@ -1,29 +1,23 @@
 "use client";
 
-import { useState } from "react";
-
 import type { VehicleOption } from "../../data";
+import { fmt } from "../../lib/format";
 
-function fmt(value: number) {
-  return new Intl.NumberFormat("cs-CZ", {
-    style: "currency",
-    currency: "CZK",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
+type FinancingTab = "cash" | "lease" | "loan";
 
 type FinancingTabsProps = {
   vehicle: VehicleOption;
+  activeTab: FinancingTab;
+  onTabChange: (tab: FinancingTab) => void;
 };
 
-type Tab = "cash" | "lease" | "loan";
+export type { FinancingTab };
 
-export function FinancingTabs({ vehicle }: FinancingTabsProps) {
-  const [tab, setTab] = useState<Tab>(
-    vehicle.leaseMonthly ? "lease" : "cash",
-  );
+export function FinancingTabs({ vehicle, activeTab, onTabChange }: FinancingTabsProps) {
+  const tab = activeTab;
+  const setTab = onTabChange;
 
-  const tabs: { id: Tab; label: string; available: boolean }[] = [
+  const tabs: { id: FinancingTab; label: string; available: boolean }[] = [
     { id: "cash", label: "Hotovost", available: true },
     {
       id: "lease",

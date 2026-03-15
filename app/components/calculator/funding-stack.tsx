@@ -1,23 +1,8 @@
 "use client";
 
-import { decisionNodes, fundingSources } from "../../data";
+import { fundingSources } from "../../data";
 import { useTreeState } from "../tree-state-provider";
-
-function fmt(value: number) {
-  return new Intl.NumberFormat("cs-CZ", {
-    style: "currency",
-    currency: "CZK",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-const typeColors: Record<string, string> = {
-  corporate: "bg-blue-500",
-  grant: "bg-[var(--green)]",
-  partners: "bg-[var(--accent)]",
-  crowdfunding: "bg-[var(--gold)]",
-  own: "bg-gray-400",
-};
+import { fmt } from "../../lib/format";
 
 const typeLabels: Record<string, string> = {
   corporate: "Firma",
@@ -42,6 +27,9 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
   const totalMin = activeSources.reduce((sum, fs) => sum + fs.estimatedMin, 0);
   const totalMax = activeSources.reduce((sum, fs) => sum + fs.estimatedMax, 0);
 
+  const diffMin = totalMin - targetPrice;
+  const diffMax = totalMax - targetPrice;
+
   if (activeSources.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-[var(--line)] bg-white p-5 text-center">
@@ -59,28 +47,7 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
     <div className="rounded-xl border border-[var(--line)] bg-white p-5">
       <h2 className="text-lg font-semibold mb-4">Odkud peníze?</h2>
 
-      {/* Segmented bar */}
-      <div className="h-6 rounded-full bg-[var(--line)] overflow-hidden flex mb-4">
-        {activeSources.map((fs) => {
-          const pct =
-            targetPrice > 0
-              ? Math.max(
-                  ((fs.estimatedMin + fs.estimatedMax) / 2 / targetPrice) * 100,
-                  3,
-                )
-              : 0;
-          return (
-            <div
-              key={fs.id}
-              className={`h-full ${typeColors[fs.type] ?? "bg-gray-400"} transition-all`}
-              style={{ width: `${Math.min(pct, 100)}%` }}
-              title={`${fs.label}: ${fmt(fs.estimatedMin)} - ${fmt(fs.estimatedMax)}`}
-            />
-          );
-        })}
-      </div>
-
-      {/* Legend */}
+      {/* Sources list */}
       <div className="space-y-2 mb-4">
         {activeSources.map((fs) => {
           const outcome = state.outcomes[fs.linkedNodeId];
@@ -89,13 +56,13 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
               key={fs.id}
               className="flex items-center justify-between text-sm"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-xs text-[var(--muted)] shrink-0 w-20">
+                  {typeLabels[fs.type] ?? fs.type}
+                </span>
+                <span className="truncate">{fs.label}</span>
                 <span
-                  className={`h-3 w-3 rounded-full ${typeColors[fs.type] ?? "bg-gray-400"}`}
-                />
-                <span>{fs.label}</span>
-                <span
-                  className={`text-xs rounded px-1.5 py-0.5 font-medium ${
+                  className={`text-xs rounded px-1.5 py-0.5 font-medium shrink-0 ${
                     outcome === "ano"
                       ? "bg-[var(--green-soft)] text-[var(--green)]"
                       : "bg-[var(--gold-soft)] text-[var(--gold)]"
@@ -104,8 +71,8 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
                   {outcome === "ano" ? "ANO" : "PODM."}
                 </span>
               </div>
-              <span className="font-medium text-[var(--muted)]">
-                {fmt(fs.estimatedMin)} - {fmt(fs.estimatedMax)}
+              <span className="font-medium text-[var(--muted)] shrink-0 ml-2">
+                {fmt(fs.estimatedMin)} – {fmt(fs.estimatedMax)}
               </span>
             </div>
           );
@@ -113,19 +80,29 @@ export function FundingStack({ targetPrice }: FundingStackProps) {
       </div>
 
       {/* Totals */}
-      <div className="border-t border-[var(--line)] pt-3 space-y-1">
+      <div className="border-t border-[var(--line)] pt-3 space-y-2">
         <div className="flex justify-between text-sm">
-          <span>Odhad min.</span>
-          <span className="font-semibold">{fmt(totalMin)}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span>Odhad max.</span>
-          <span className="font-semibold">{fmt(totalMax)}</span>
+          <span>Celkem zdroje (min – max)</span>
+          <span className="font-semibold">
+            {fmt(totalMin)} – {fmt(totalMax)}
+          </span>
         </div>
         <div className="flex justify-between text-sm">
           <span>Cílová cena vozu</span>
           <span className="font-bold text-[var(--accent)]">
             {fmt(targetPrice)}
+          </span>
+        </div>
+        <div className="flex justify-between text-sm font-semibold">
+          <span>{diffMax >= 0 ? "Přebytek / Schodek" : "Schodek / Přebytek"}</span>
+          <span className="flex gap-2">
+            <span className={diffMin >= 0 ? "text-[var(--green)]" : "text-red-600"}>
+              {diffMin >= 0 ? "+" : ""}{fmt(diffMin)}
+            </span>
+            <span className="text-[var(--muted)]">–</span>
+            <span className={diffMax >= 0 ? "text-[var(--green)]" : "text-red-600"}>
+              {diffMax >= 0 ? "+" : ""}{fmt(diffMax)}
+            </span>
           </span>
         </div>
       </div>
