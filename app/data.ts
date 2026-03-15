@@ -25,6 +25,7 @@ export type LegalNote = {
   title: string;
   keyRule: string;
   text: string;
+  forPartner: string;
   source: SourceLink;
 };
 
@@ -325,21 +326,31 @@ export const actionPhases: ActionPhase[] = [
 
 export const legalNotes: LegalNote[] = [
   {
-    title: "Dar od firmy není sleva na dani 1:1",
-    keyRule: "Minimum 2 000 Kč/rok, max. 10 % základu daně — odpočet, ne sleva.",
-    text: "Právnická osoba může podle § 20 odst. 8 zákona o daních z příjmů odečíst hodnotu bezúplatného plnění na sportovní účely, pokud činí alespoň <strong>2 000 Kč za rok</strong>. V úhrnu jde nejvýše o <strong>10 % základu daně</strong> sníženého podle § 34. To je odpočet od základu daně, <strong>ne přímá sleva na dani</strong>.",
+    title: "Dar vs. sponzoring — v čem je rozdíl",
+    keyRule: "Dar = odpočet max 10 % základu daně. Sponzoring = celá částka jde do nákladů firmy.",
+    text: "<strong>Dar:</strong> Firma dá peníze bez protiplnění. Může si odečíst max 10 % základu daně (minimum 2 000 Kč/rok). Pozor: je to odpočet od základu, ne sleva na dani — reálná úspora je cca 19 % z daru. Když firma daruje 10 000 Kč, ušetří na dani asi 1 900 Kč.<br/><br/><strong>Sponzoring/reklama:</strong> Firma platí za protiplnění (logo na autě, zmínky na webu). Celá částka jde do nákladů → snižuje základ daně 1:1. Když firma zaplatí 10 000 Kč za reklamu, ušetří na dani cca 1 900 Kč, ALE navíc jí to snižuje zisk, takže účetně je to čistší a přirozenější. <strong>Pro pravidelnou měsíční podporu je sponzoring jednoznačně lepší varianta.</strong>",
+    forPartner: "Vaše podpora půjde celá do nákladů firmy jako reklama — je to pro vás výhodnější než dar.",
     source: sources[14],
   },
   {
-    title: "Pro firmy bývá praktičtější sponzoring/reklama",
-    keyRule: "Logo a zmínky = reklamní smlouva, ne dar. Ověřit nastavení s účetním partnera.",
-    text: "Pokud firma chce protiplnění typu logo, zmínky nebo prezentaci značky, je zpravidla čistší uzavřít <strong>reklamní nebo sponzorskou smlouvu</strong> místo daru. Pro opakovanou měsíční podporu je to často účetně i obchodně přirozenější. Ze strany klubu to máme pod kontrolou — ověřit nastavení s účetním na straně partnera.",
+    title: "Co firma za podporu získá",
+    keyRule: "Logo na 9místném autě, webu, sociálních sítích + kvartální report o využití.",
+    text: "Konkrétní protiplnění pro partnera:<br/>• <strong>Logo na vozidle</strong> — auto jezdí po celé ČR na soutěže, viditelnost v regionu i mimo něj<br/>• <strong>Zmínka na webu oddílu</strong> s odkazem na firmu<br/>• <strong>Prezentace na sociálních sítích</strong> oddílu při výjezdech a soutěžích<br/>• <strong>Banner na domácích soutěžích</strong> a akcích oddílu<br/>• <strong>Kvartální přehled:</strong> kolik akcí, kolik km, výsledky, fotky<br/>• Na přání: zmínka v médiích při úspěších oddílu<br/><br/>Protiplnění se specifikuje ve smlouvě a lze přizpůsobit podle přání partnera.",
+    forPartner: "Za měsíční podporu dostanete viditelnost na autě, webu a akcích oddílu — s kvartálním reportem.",
+    source: sources[0],
+  },
+  {
+    title: "Jak to účetně nastavit",
+    keyRule: "Klub pošle smlouvu a fakturu. Firma zaúčtuje jako náklad na reklamu.",
+    text: "Praktický postup krok za krokem:<br/>1. Klub a firma podepíšou <strong>reklamní/sponzorskou smlouvu</strong> (ne darovací).<br/>2. Smlouva specifikuje: co klub poskytuje (logo, zmínky) a kolik firma platí měsíčně.<br/>3. Klub vystaví fakturu → firma ji zaplatí a zaúčtuje jako <strong>náklad na reklamu/propagaci</strong>.<br/>4. Pro firmu: celá částka jde do nákladů (snižuje základ daně).<br/>5. Pro klub: příjem z reklamy, zdaníme standardně.<br/>6. Účetní na straně partnera to zvládne — stačí mu dodat smlouvu a fakturu.<br/><br/><strong>Ze strany klubu tohle máme pod kontrolou a připravíme vše potřebné.</strong>",
+    forPartner: "Pošleme vám jednoduchou smlouvu a fakturu. Váš účetní to zaúčtuje jako náklad na reklamu.",
     source: sources[14],
   },
   {
-    title: "Můj klub 2026 není hlavní cesta k přímému autu",
-    keyRule: "Nezpůsobilé: majetek nad 60 000 Kč bez DPH + leasing osobních aut.",
-    text: "V pravidlech výzvy Můj klub 2026 jsou mezi nezpůsobilými náklady uvedeny pořízení nebo technické zhodnocení hmotného majetku <strong>nad 60 000 Kč bez DPH</strong> a také <strong>finanční leasing osobních automobilů</strong> a dalšího majetku. Program proto ber jako provozní polštář, ne jako nákup dodávky.",
+    title: "Dotace Můj klub 2026 — jen na provoz, ne na auto",
+    keyRule: "Nelze koupit majetek nad 60 000 Kč ani leasing osobních aut.",
+    text: "Program Můj klub 2026 od Národní sportovní agentury <strong>neumožňuje přímý nákup vozidla</strong> — mezi nezpůsobilými náklady je majetek nad 60 000 Kč bez DPH a finanční leasing osobních automobilů. Ale dá se použít jako <strong>provozní polštář</strong>: pokryje provozní náklady oddílu (nájmy, vybavení, cestovné), čímž uvolní peníze z rozpočtu klubu na splátky auta.",
+    forPartner: "Tato dotace se týká jen klubu, ne partnerů.",
     source: sources[5],
   },
 ];

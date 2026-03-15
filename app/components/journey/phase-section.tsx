@@ -6,7 +6,11 @@ import { useTreeState } from "../tree-state-provider";
 import { useOutreachState } from "../outreach-state-provider";
 import { PhaseNodeDetail } from "./phase-node-detail";
 import { PipelineView } from "../pipeline-view";
+import { PartnerInfoBox } from "./partner-info-box";
 import type { LeadStatus } from "../../data";
+
+// Fáze kde se jedná s firmami a partner-info-box dává smysl
+const PARTNER_INFO_PHASES = new Set(["faze-3", "faze-4", "faze-5"]);
 
 const STATUS_CONFIG: Record<LeadStatus, { label: string; color: string; bg: string }> = {
   ceka: { label: "Čeká", color: "text-[var(--muted)]", bg: "bg-[var(--surface-raised)]" },
@@ -145,6 +149,9 @@ export function PhaseSection({ phase, index, active, nodes, leads, templates, fu
           </div>
         </CollapsibleSection>
       )}
+
+      {/* Partner info */}
+      {PARTNER_INFO_PHASES.has(phase.id) && leads.length > 0 && <PartnerInfoBox />}
 
       {/* Templates section */}
       {templates.length > 0 && (
