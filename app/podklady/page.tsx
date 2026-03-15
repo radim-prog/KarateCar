@@ -1,5 +1,4 @@
-import { actionPhases, legalNotes, sources } from "../data";
-import { VisualTimeline } from "../components/visual-timeline";
+import { legalNotes, sources } from "../data";
 import { PageCrossLinks } from "../components/page-cross-links";
 
 const sourceCategories = ["Oddíl", "Dotace", "Automobilky", "Právní"] as const;
@@ -25,12 +24,6 @@ export default function PodkladyPage() {
           oficiální odkazy. Tuhle stránku otevři, když potřebuješ oporu pro rozhodnutí.
         </p>
       </div>
-
-      {/* Visual Timeline */}
-      <section>
-        <h2 className="text-lg font-semibold mb-4">Časová osa</h2>
-        <VisualTimeline phases={actionPhases} />
-      </section>
 
       {/* Partner guide */}
       <section>

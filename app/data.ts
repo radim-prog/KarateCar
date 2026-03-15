@@ -5,13 +5,6 @@ export type SourceLink = {
   category?: string;
 };
 
-export type ActionPhase = {
-  title: string;
-  window: string;
-  outcome: string;
-  actions: string[];
-};
-
 export type LeadStatus = "ceka" | "osloveno" | "odpoved" | "schuzka" | "dohodnuto" | "odmitli";
 
 export type PipelineStep = {
@@ -221,108 +214,6 @@ export const sources: SourceLink[] = [
 ];
 
 
-export const actionPhases: ActionPhase[] = [
-  {
-    title: "Zmapování situace",
-    window: "Týden 0",
-    outcome: "Jasný přehled o tom, co oddíl potřebuje a jaké má zdroje.",
-    actions: [
-      "Sepsat posledních 12 měsíců výjezdů: počet akcí, počet lidí, kilometry.",
-      "Zjistit aktuální rozpočet oddílu a volné prostředky.",
-      "Stanovit tři cíle: 9místné auto, menší auto, záložní varianta ojetina.",
-    ],
-  },
-  {
-    title: "Příprava materiálů",
-    window: "Týden 1",
-    outcome: "Nabídkový materiál, profil oddílu a mobilitní shrnutí připravené k rozeslání.",
-    actions: [
-      "Připravit jednostránkový klubový profil s čísly a fotkami.",
-      "Vytvořit dvoustránkové mobilitní shrnutí s konkrétními požadavky.",
-      "Nachystat partnerské balíčky pro firmy (logo, viditelnost, vyúčtování).",
-    ],
-  },
-  {
-    title: "Oslovení Škoda Auto",
-    window: "Týden 1–2",
-    outcome: "Odeslaná žádost na Škoda Auto Kvasiny a Nadační fond Škoda Auto.",
-    actions: [
-      "Poslat e-mail regionálnímu vedení Škoda Auto Kvasiny.",
-      "Oslovit Nadační fond Škoda Auto s grantovou žádostí.",
-      "Navázat telefonicky do 2 dnů po odeslání.",
-    ],
-  },
-  {
-    title: "Oslovení konkurenčních automobilek",
-    window: "Týden 2–3",
-    outcome: "Rozeslané žádosti na Hyundai, Toyota, Ford a VW.",
-    actions: [
-      "Poslat přizpůsobený e-mail na flotilová centra Hyundai, Toyota, Ford.",
-      "Zdůraznit příležitost viditelnosti v regionu Škoda.",
-      "Shromáždit první reakce a nabídky.",
-    ],
-  },
-  {
-    title: "Oslovení lokálních firem",
-    window: "Týden 2–4",
-    outcome: "Nabídky partnerství rozeslané regionálním firmám.",
-    actions: [
-      "Obvolat a napsat lokální firmy s nabídkou měsíčního partnerství.",
-      "Nabízet konkrétní balíčky (1 000 / 2 500 / 5 000 Kč měsíčně).",
-      "Sledovat reakce a plánovat osobní schůzky.",
-    ],
-  },
-  {
-    title: "Rozhovor s městem a krajem",
-    window: "Týden 3–4",
-    outcome: "Potvrzení dostupných dotací a veřejných podpor.",
-    actions: [
-      "Domluvit schůzku s odborem sportu města Rychnov.",
-      "Zjistit možnosti krajských dotací pro sport a mládež.",
-      "Potvrdit, jaké veřejné podpory lze skládat vedle auta.",
-    ],
-  },
-  {
-    title: "Kampaň mezi rodiči a oddílem",
-    window: "Týden 3–5",
-    outcome: "Zapojení rodičů a členů do podpory a sbírání kontaktů.",
-    actions: [
-      "Rozeslat letáky a zprávy do rodičovských skupin.",
-      "Osobně oslovit rodiče na trénincích.",
-      "Sbírat kontakty na firmy a jednatele přes osobní doporučení.",
-    ],
-  },
-  {
-    title: "Porovnání nabídek",
-    window: "Týden 6–8",
-    outcome: "Přehled všech nabídek a zdrojů financování na jednom místě.",
-    actions: [
-      "Shromáždit závazné nabídky od minimálně 3 značek.",
-      "Porovnat: cena, nájezd, servis, pojištění, sankce za km, odkup.",
-      "Dopočítat měsíční zátěž proti skutečně podepsaným partnerstvím.",
-    ],
-  },
-  {
-    title: "Rozhodnutí o modelu a financování",
-    window: "Týden 8–10",
-    outcome: "Vybraný vůz a potvrzený model financování.",
-    actions: [
-      "Vybrat mezi novým vozem, leasingem a předváděcí variantou.",
-      "Potvrdit servisní rezervu a měsíční příjmy od partnerů.",
-      "Rozhodnout, jestli klub spouští rovnou i menší auto.",
-    ],
-  },
-  {
-    title: "Podpis a rozjezd",
-    window: "Týden 10+",
-    outcome: "Auto je na cestě a partneři vědí, jak bude jejich podpora vidět.",
-    actions: [
-      "Podepsat smlouvu na auto až po potvrzení servisní rezervy.",
-      "Nastavit kvartální report pro partnery: akce, najeté km, fotky.",
-      "Připravit druhou vlnu pro menší auto nebo obnovu za 2–3 roky.",
-    ],
-  },
-];
 
 export const legalNotes: LegalNote[] = [
   {
