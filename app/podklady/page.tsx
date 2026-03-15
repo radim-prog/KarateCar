@@ -10,8 +10,9 @@ export default function PodkladyPage() {
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight">Zdroje a podklady</h1>
         <p className="mt-3 text-base text-[var(--muted)] max-w-2xl leading-relaxed">
-          Časová osa, praktické informace pro jednání s firmami a všechny
-          oficiální odkazy. Tuhle stránku otevři, když potřebuješ oporu pro rozhodnutí.
+          Praktické informace pro jednání s firmami — co nabídnout, jak to
+          funguje daňově a jak nastavit účetnictví. Konkrétní zdroje najdeš
+          přímo u každé strategie v průvodci.
         </p>
       </div>
 
