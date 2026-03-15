@@ -471,3 +471,82 @@ body::before {
     border-radius: 5px 5px 0 0;
   }
 }
+
+/* ── Journey / Phase sections ── */
+
+.phase-section {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--phase-color, var(--line-strong));
+  border-radius: 1rem;
+  background: var(--surface);
+  padding: 1.25rem 1.5rem;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.phase-section.phase-locked {
+  opacity: 0.35;
+  filter: grayscale(0.4);
+}
+
+.phase-header {
+  margin-bottom: 0.25rem;
+}
+
+.phase-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.phase-detail {
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--accent);
+  border-radius: 1rem;
+  background: var(--surface);
+  padding: 1.25rem 1.5rem;
+  animation: bracketSlideIn 0.25s ease;
+}
+
+/* Phase connector (vertical NE arrow between phases) */
+
+.phase-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+.phase-connector.lit {
+  opacity: 1;
+}
+
+.phase-connector-line {
+  flex: 1;
+  height: 2px;
+  background: var(--line-strong);
+  max-width: 60px;
+  transition: background 0.4s ease;
+}
+
+.phase-connector.lit .phase-connector-line {
+  background: var(--accent);
+}
+
+.phase-connector-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: var(--background);
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: color 0.4s ease;
+}
+
+.phase-connector.lit .phase-connector-label {
+  color: var(--accent);
+}

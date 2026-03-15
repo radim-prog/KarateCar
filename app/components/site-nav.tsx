@@ -4,10 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/", label: "Strategie" },
+  { href: "/", label: "Průvodce" },
   { href: "/kalkulacka", label: "Náklady" },
-  { href: "/outreach", label: "Kontakty" },
-  { href: "/dokumenty", label: "Šablony" },
   { href: "/podklady", label: "Podklady" },
 ];
 

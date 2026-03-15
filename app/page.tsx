@@ -3,14 +3,12 @@
 import Link from "next/link";
 
 import { TreeStateProvider } from "./components/tree-state-provider";
-import { BracketView } from "./components/decision-tree/bracket-view";
-import { TreeProgress } from "./components/decision-tree/tree-progress";
-import { TreeSummary } from "./components/decision-tree/tree-summary";
-import { PlanOverview } from "./components/plan-overview";
+import { OutreachStateProvider } from "./components/outreach-state-provider";
+import { JourneyView } from "./components/journey/journey-view";
 
-function SpiderPage() {
+function GuidePage() {
   return (
-    <div className="space-y-10 max-w-5xl">
+    <div className="space-y-8 max-w-4xl">
       {/* Hero */}
       <div className="relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 md:p-10">
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-glow)] via-transparent to-transparent" />
@@ -22,8 +20,9 @@ function SpiderPage() {
             Jak získat auto pro oddíl
           </h1>
           <p className="mt-3 text-base text-[var(--muted)] max-w-xl leading-relaxed">
-            Postupujte od nejlepší varianty. Když řeknou NE, otevře se
-            další kolo alternativ. Klikněte na kartu a zvolte ANO / NE / PODMÍNKA.
+            Postupujte od nejlepší varianty dolů. U každé fáze najdete koho
+            oslovit, jakou šablonou a jaký je postup. Když strategie nevyjde,
+            označte ji jako NE a otevře se další fáze.
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
             <Link
@@ -33,37 +32,17 @@ function SpiderPage() {
               Spočítat náklady
             </Link>
             <Link
-              href="/outreach"
+              href="/podklady"
               className="rounded-lg border border-[var(--line-strong)] px-5 py-2.5 text-sm font-semibold hover:border-[var(--accent)] hover:text-[var(--accent)] transition"
             >
-              Koho oslovit
+              Podklady a zdroje
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Plan overview */}
-      <PlanOverview />
-
-      {/* Section: Rozhodovací strom */}
-      <div className="space-y-5">
-        <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-[var(--line)]" />
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--muted)]">
-            Rozhodovací strom
-          </h2>
-          <div className="h-px flex-1 bg-[var(--line)]" />
-        </div>
-
-        {/* Progress */}
-        <TreeProgress />
-
-        {/* THE BRACKET */}
-        <BracketView />
-
-        {/* Summary */}
-        <TreeSummary />
-      </div>
+      {/* Journey */}
+      <JourneyView />
     </div>
   );
 }
@@ -71,7 +50,9 @@ function SpiderPage() {
 export default function Home() {
   return (
     <TreeStateProvider>
-      <SpiderPage />
+      <OutreachStateProvider>
+        <GuidePage />
+      </OutreachStateProvider>
     </TreeStateProvider>
   );
 }

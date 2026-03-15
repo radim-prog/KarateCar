@@ -29,6 +29,7 @@ export type LegalNote = {
 };
 
 export type Lead = {
+  id: string;
   name: string;
   kind: string;
   angle: string;
@@ -36,6 +37,15 @@ export type Lead = {
   contact: string;
   source: SourceLink;
   status?: LeadStatus;
+};
+
+export type PhaseConfig = {
+  id: string;
+  label: string;
+  name: string;
+  color: string;
+  nodeIds: string[];
+  description: string;
 };
 
 export type TemplateBlock = {
@@ -336,6 +346,7 @@ export const legalNotes: LegalNote[] = [
 
 export const automotiveLeads: Lead[] = [
   {
+    id: "skoda-auto",
     name: "Škoda Auto / flotila a financování",
     kind: "Automobilový partner",
     angle: "Lokální příběh přes Kvasiny a silná regionální relevance.",
@@ -344,6 +355,7 @@ export const automotiveLeads: Lead[] = [
     source: sources[13],
   },
   {
+    id: "nfsa",
     name: "Nadační fond Škoda Auto",
     kind: "Nadace",
     angle: "Veřejně viditelná regionální podpora a logický vstup do vyjednávání.",
@@ -352,6 +364,7 @@ export const automotiveLeads: Lead[] = [
     source: sources[6],
   },
   {
+    id: "hyundai",
     name: "Hyundai flotilové centrum",
     kind: "Flotila a zvýhodněné skupiny",
     angle: "Oficiálně komunikují flotilové centrum a zvýhodněné skupiny.",
@@ -360,6 +373,7 @@ export const automotiveLeads: Lead[] = [
     source: sources[8],
   },
   {
+    id: "toyota",
     name: "Toyota / KINTO ONE",
     kind: "Financování a vůz",
     angle: "Toyota zveřejňuje Proace Verso i vzorovou kalkulaci financování.",
@@ -368,6 +382,7 @@ export const automotiveLeads: Lead[] = [
     source: sources[9],
   },
   {
+    id: "ford",
     name: "Ford Tourneo Custom",
     kind: "Vozidlo a srovnání",
     angle: "Veřejná cena dává dobrý srovnávací rámec.",
@@ -376,6 +391,7 @@ export const automotiveLeads: Lead[] = [
     source: sources[11],
   },
   {
+    id: "autoin",
     name: "AUTO IN Group",
     kind: "Prodejce a operativní leasing",
     angle: "Praktický partner pro konkrétní nabídky aut a leasingových variant.",
@@ -391,6 +407,7 @@ export const automotiveLeads: Lead[] = [
 
 export const localCompanyLeads: Lead[] = [
   {
+    id: "matrix",
     name: "MATRIX a.s.",
     kind: "Lokální firma",
     angle: "Skupina sídlí v Rychnově a sama pracuje i s automotive a Škoda Auto.",
@@ -403,6 +420,7 @@ export const localCompanyLeads: Lead[] = [
     },
   },
   {
+    id: "bednar",
     name: "BEDNAR FMT",
     kind: "Lokální firma",
     angle: "Významná výrobní firma z Rychnova nad Kněžnou se silnou regionální stopou.",
@@ -415,6 +433,7 @@ export const localCompanyLeads: Lead[] = [
     },
   },
   {
+    id: "assa-abloy",
     name: "ASSA ABLOY Opening Solutions CZ",
     kind: "Lokální firma",
     angle: "Silný zaměstnavatel v Rychnově, vhodný kandidát na regionální společenskou odpovědnost nebo partnerství.",
@@ -427,6 +446,7 @@ export const localCompanyLeads: Lead[] = [
     },
   },
   {
+    id: "genesisrk",
     name: "GenesisRK",
     kind: "Lokální firma",
     angle: "Firma má provozovnu a sklad přímo v Rychnově a už je veřejně vidět mezi podporovateli oddílu.",
@@ -439,6 +459,7 @@ export const localCompanyLeads: Lead[] = [
     },
   },
   {
+    id: "poda",
     name: "PODA",
     kind: "Regionální firma",
     angle: "Silná značka s veřejnými kontakty a zároveň veřejně uvedený partner oddílu.",
@@ -454,6 +475,7 @@ export const localCompanyLeads: Lead[] = [
 
 export const communityLeads: Lead[] = [
   {
+    id: "parents-network",
     name: "Rodiče a členové s vlastní firmou",
     kind: "Osobní kontakt",
     angle: "Nejsnazší vstup — oddíl už má vztah a důvěru. Přes rodiče se dostanete k jednatelům a majitelům firem.",
@@ -466,6 +488,7 @@ export const communityLeads: Lead[] = [
     },
   },
   {
+    id: "existing-partners",
     name: "GenesisRK, PODA, Hájek-Cargo",
     kind: "Partner oddílu",
     angle: "Stávající partneři uvedení na webu oddílu. Mají pozitivní vztah, nejde o studený kontakt.",
@@ -474,6 +497,7 @@ export const communityLeads: Lead[] = [
     source: sources[1],
   },
   {
+    id: "personal-referrals",
     name: "Osobní doporučení přes rodiče",
     kind: "Osobní kontakt",
     angle: "Nejlepší cesta k jednateli nebo správci vozového parku bývá přes osobní doporučení, ne přes recepci.",
@@ -605,7 +629,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnNe: "Zkusit konkurenční automobilku nebo Nadační fond Škoda Auto.",
     nextMoveOnPodminka: "Zjistit konkrétní podmínky a připravit požadované dokumenty.",
     relatedLeadIds: ["skoda-auto"],
-    relatedTemplateIds: ["automotive"],
+    relatedTemplateIds: ["automotive-skoda", "automotive-competition"],
   },
   {
     id: "competitor-free",
@@ -633,7 +657,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnNe: "Pokračovat s Nadačním fondem Škoda nebo přejít na fázi 2 — dotace.",
     nextMoveOnPodminka: "Dodat požadované materiály a čekat na rozhodnutí.",
     relatedLeadIds: ["hyundai", "toyota", "ford"],
-    relatedTemplateIds: ["automotive"],
+    relatedTemplateIds: ["automotive-skoda", "automotive-competition"],
   },
   {
     id: "skoda-foundation",
@@ -821,7 +845,8 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Vybrat nejlepší nabídku a zajistit financování splátky.",
     nextMoveOnNe: "Zkusit flotilový leasing nebo předváděcí vůz.",
     nextMoveOnPodminka: "Dodat IČO, stanovy a výpis z rejstříku spolků.",
-    relatedTemplateIds: ["automotive"],
+    relatedLeadIds: ["hyundai", "toyota", "ford", "autoin"],
+    relatedTemplateIds: ["automotive-skoda", "automotive-competition"],
   },
   {
     id: "fleet-lease",
@@ -848,7 +873,8 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Podepsat leasing a zajistit měsíční příjmy na splátky.",
     nextMoveOnNe: "Zkusit předváděcí nebo skladový vůz.",
     nextMoveOnPodminka: "Dodat IČO, stanovy a výpis z rejstříku spolků.",
-    relatedTemplateIds: ["automotive"],
+    relatedLeadIds: ["hyundai", "toyota", "ford", "autoin"],
+    relatedTemplateIds: ["automotive-skoda", "automotive-competition"],
   },
   {
     id: "demo-car",
@@ -875,6 +901,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Zajistit financování (leasing/úvěr/hotovost) a koupit.",
     nextMoveOnNe: "Přejít na fázi 4 — kombinované financování.",
     nextMoveOnPodminka: "Nechat si vůz rezervovat a mezitím zajistit finance.",
+    relatedLeadIds: ["autoin"],
   },
 
   // ── FÁZE 4: Kombinované financování ──
@@ -958,6 +985,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Podepsat partnerské smlouvy a spustit pravidelné inkaso.",
     nextMoveOnNe: "Zkusit dary od rodičů nebo crowdfunding.",
     nextMoveOnPodminka: "Nabídnout zkušební 3měsíční období.",
+    relatedLeadIds: ["matrix", "bednar", "assa-abloy", "genesisrk", "poda"],
     relatedTemplateIds: ["company"],
   },
   {
@@ -985,6 +1013,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Spustit pravidelné příspěvky a transparentní přehled.",
     nextMoveOnNe: "Zkusit crowdfunding kampaň.",
     nextMoveOnPodminka: "Nastavit dobrovolnou úroveň bez minimální částky.",
+    relatedLeadIds: ["parents-network", "existing-partners", "personal-referrals"],
     relatedTemplateIds: ["parents"],
   },
   {
@@ -1013,6 +1042,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Použít na akontaci leasingu nebo přímý nákup ojetiny.",
     nextMoveOnNe: "Přejít na fázi 6 — poslední záchrana.",
     nextMoveOnPodminka: "Prodloužit kampaň nebo snížit cílovou částku.",
+    relatedLeadIds: ["parents-network", "personal-referrals"],
     relatedTemplateIds: ["parents"],
   },
 
@@ -1042,6 +1072,7 @@ export const decisionNodes: DecisionNode[] = [
     nextMoveOnAno: "Koupit a zajistit pojištění + servisní rezervu.",
     nextMoveOnNe: "Poslední možnost: vlastní úvěr oddílu.",
     nextMoveOnPodminka: "Nechat vůz v rezervaci a zajistit chybějící finance.",
+    relatedLeadIds: ["autoin"],
   },
   {
     id: "own-loan",
@@ -1296,3 +1327,72 @@ export const fundingSources: FundingSource[] = [
     note: "Členské příspěvky a úspory oddílu.",
   },
 ];
+
+// ── Phase Configuration ──
+
+export const PHASE_CONFIG: PhaseConfig[] = [
+  {
+    id: "start",
+    label: "ZAČÁTEK",
+    name: "Nejlepší varianta",
+    color: "var(--green)",
+    nodeIds: ["skoda-free"],
+    description: "Nejlogičtější první dveře — Škoda Auto má závod v Kvasinách 15 km od Rychnova.",
+  },
+  {
+    id: "faze-1",
+    label: "FÁZE 1",
+    name: "Alternativy zdarma",
+    color: "var(--green)",
+    nodeIds: ["competitor-free", "skoda-foundation"],
+    description: "Pokud Škoda neodpoví, zkusit konkurenční značky nebo Nadační fond.",
+  },
+  {
+    id: "faze-2",
+    label: "FÁZE 2",
+    name: "Dotace a granty",
+    color: "var(--blue)",
+    nodeIds: ["grant-city", "grant-region", "grant-nsa", "grant-eu", "grant-foundations"],
+    description: "Veřejné a nadační peníze, které uvolní rozpočet klubu na splátky auta.",
+  },
+  {
+    id: "faze-3",
+    label: "FÁZE 3",
+    name: "Zvýhodněné pořízení",
+    color: "var(--accent)",
+    nodeIds: ["automaker-program", "fleet-lease", "demo-car"],
+    description: "Slevy a zvýhodněné podmínky od automobilek a dealerů.",
+  },
+  {
+    id: "faze-4",
+    label: "FÁZE 4",
+    name: "Kombinované financování",
+    color: "var(--gold)",
+    nodeIds: ["subsidized-lease", "new-nonprofit"],
+    description: "Složit splátky z více příjmových proudů nebo založit účelovou organizaci.",
+  },
+  {
+    id: "faze-5",
+    label: "FÁZE 5",
+    name: "Vlastní příjmy",
+    color: "var(--purple)",
+    nodeIds: ["partner-club", "parent-donations", "crowdfunding"],
+    description: "Měsíční příjmy od partnerů, rodičů a veřejné sbírky.",
+  },
+  {
+    id: "faze-6",
+    label: "FÁZE 6",
+    name: "Poslední záchrana",
+    color: "var(--muted)",
+    nodeIds: ["used-car", "own-loan"],
+    description: "Levnější ojetina nebo standardní úvěr — poslední možnost, když nic jiného nevyjde.",
+  },
+];
+
+// ── All Leads (merged) ──
+
+export const allLeads: Lead[] = [...automotiveLeads, ...localCompanyLeads, ...communityLeads];
+
+export const leadsById = new Map(allLeads.map((l) => [l.id, l]));
+
+export const templatesById = new Map(documentTemplates.map((t) => [t.id, t]));
