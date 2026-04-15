@@ -21,23 +21,23 @@ export function useOutreachState() {
   return useContext(OutreachContext);
 }
 
+function readInitialStatuses(): OutreachState {
+  if (typeof window === "undefined") return {};
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored) as OutreachState;
+  } catch {}
+  return {};
+}
+
 export function OutreachStateProvider({ children }: { children: ReactNode }) {
-  const [statuses, setStatuses] = useState<OutreachState>({});
-  const [loaded, setLoaded] = useState(false);
+  const [statuses, setStatuses] = useState<OutreachState>(readInitialStatuses);
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setStatuses(JSON.parse(stored));
-    } catch {}
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (loaded) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(statuses));
-    }
-  }, [statuses, loaded]);
+    } catch {}
+  }, [statuses]);
 
   const setLeadStatus = useCallback((name: string, status: LeadStatus) => {
     setStatuses((prev) => ({ ...prev, [name]: status }));
