@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { OperativaNav } from "./operativa-nav";
 
+export const dynamic = "force-dynamic";
+
 export default function OperativaLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen" style={{ background: "var(--background)" }}>
