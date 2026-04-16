@@ -40,3 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# privátní data — NECOMMITOVAT (repo je PUBLIC)
+/data/
+/.claude-context/research-grants/
+/.claude-context/*.md
+/.aigiscode/
+/.omc/
